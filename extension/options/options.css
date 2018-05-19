@@ -1,0 +1,117 @@
+body {
+  font: 15px message-box;
+  line-height: 20px;
+  text-shadow: 0 1px 1px #fefffe;
+}
+
+#config_panel {
+  display: flex;
+  min-width: 600px;
+  margin: 1px;
+}
+
+#spinfo {
+  flex: 0 0 240px;
+  padding: 10px 10px 30px;
+  border: 1px solid #80808033;
+  position: relative;
+}
+
+#spdetail {
+  flex: 1 0 auto;
+  padding: 0 10px 30px;
+  border: 1px solid #80808033;
+  margin-left: -1px;
+  position: relative;
+}
+
+.button-line {
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+}
+
+#splist {
+  padding: 10px 0;
+  width: 240px;
+  margin: 0 -10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+#splist .current {
+  background-color: #48c3;
+}
+
+#splist .panel-list-item {
+  white-space: nowrap;
+  width: 240px;
+  overflow: hidden;
+}
+
+#faviconinput {
+  clip: rect(1px, 1px, 1px, 1px);
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+}
+
+.favicon-preview {
+  position: relative;
+  top: 4px;
+}
+
+#spdetail > .panel-section {
+  display: block;
+  margin: 20px 0;
+}
+
+.config-title {
+  display: block;
+  margin: 5px 0;
+}
+
+.config-content {
+  margin-left: 20px;
+}
+
+input[type="text"] {
+  width: calc(100% - 20px);
+}
+
+.config-description {
+  margin-left: 20px;
+  font-size: 80%;
+}
+
+#splist .browser-style > input[type="checkbox"] + label::before {
+  position: relative;
+  top: 3px;
+  vertical-align: -5px;
+}
+
+#spdetail.create-form #removebutton,
+#spdetail.create-form #moveupbutton,
+#spdetail.create-form #movedownbutton {
+  display: none;
+}
+
+.button-line::before,
+.button-line::after {
+  content: " ";
+  display: table;
+  clear: both;
+}
+
+.button-line button {
+  float: right;
+  margin-left: 10px;
+}
+
+#moveupbutton, #movedownbutton {
+  float: left;
+  margin-left: 0;
+  margin-right: 10px;
+}

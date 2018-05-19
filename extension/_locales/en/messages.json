@@ -1,0 +1,66 @@
+{
+  "extensionName": {
+    "message": "Classical Search Bar",
+    "description": "Name of the extension; Should be kept as is when localizing."
+  },
+  "extensionDescription": {
+    "message": "Simulate classical search bar by adding a search engine switch button.",
+    "description": "Description of the extension."
+  },
+  "extensionButtonTitle": {
+    "message": "Search by ...",
+    "description": "Title of the extension button."
+  },
+  "addButton": {
+    "message": "Add",
+    "description": ""
+  },
+  "resetButton": {
+    "message": "Restore Default",
+    "description": ""
+  },
+  "configTitleName": {
+    "message": "Name",
+    "description": ""
+  },
+  "configTitleSearchUrl": {
+    "message": "Search URL",
+    "description": ""
+  },
+  "configSearchUrlDescription": {
+    "message": "Use {searchTerms} as placeholder of searching text",
+    "description": ""
+  },
+  "configTitleIcon": {
+    "message": "Icon",
+    "description": ""
+  },
+  "browseButton": {
+    "message": "Browse...",
+    "description": ""
+  },
+  "configTitleStatus": {
+    "message": "Status",
+    "description": ""
+  },
+  "configStatusEnabled": {
+    "message": "Enabled",
+    "description": ""
+  },
+  "moveUpButton": {
+    "message": "Move Up",
+    "description": ""
+  },
+  "moveDownButton": {
+    "message": "Move Down",
+    "description": ""
+  },
+  "saveButton": {
+    "message": "Save",
+    "description": ""
+  },
+  "removeButton": {
+    "message": "Remove",
+    "description": ""
+  }
+}

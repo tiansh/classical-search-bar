@@ -1,0 +1,67 @@
+{
+
+  "manifest_version": 2,
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "version": "0.1.0",
+  "default_locale": "en",
+
+  "icons": {
+    "48": "search.svg"
+  },
+
+  "permissions": [
+    "webRequest", "webRequestBlocking",
+    "https://6905b838-e843-4ee3-9df0-b4c79673b21c.invalid/*",
+    "storage"
+  ],
+
+  "background": {
+    "scripts": [
+      "default_provider.js",
+      "background.js"
+    ]
+  },
+
+  "browser_action": {
+    "browser_style": true,
+    "default_icon": "search.svg",
+    "default_title": "__MSG_extensionButtonTitle__",
+    "default_popup": "/popup/popup.html"
+  },
+
+  "commands": {
+    "search-provider-prev": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Up"
+      }
+    },
+    "search-provider-next": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Down"
+      }
+    }
+  },
+
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "name": "Classical Search Bar",
+      "search_url": "https://6905b838-e843-4ee3-9df0-b4c79673b21c.invalid/search?searchTerms={searchTerms}",
+      "is_default": true
+    }
+  },
+
+  "options_ui": {
+    "browser_style": true,
+    "page": "options/options.html"
+  },
+  
+  "applications": {
+    "gecko": {
+      "id": "{6905b838-e843-4ee3-9df0-b4c79673b21c}",
+      "strict_min_version": "57.0a1"
+    }
+  }
+
+
+}

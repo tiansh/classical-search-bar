@@ -1,0 +1,10 @@
+.panel {
+  transform: scale(1);
+  width: 240px;
+  white-space: nowrap;
+}
+
+.panel .text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
