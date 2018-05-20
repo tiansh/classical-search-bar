@@ -13,54 +13,58 @@
   },
   "addButton": {
     "message": "Add",
-    "description": ""
+    "description": "A button for adding search engine in option page"
   },
   "resetButton": {
     "message": "Restore Default",
-    "description": ""
+    "description": "A button for reset search engine list in option page"
+  },
+  "resetButtonSecondTime": {
+    "message": "Click Again to Confirm",
+    "description": "A button for confirm reset action"
   },
   "configTitleName": {
     "message": "Name",
-    "description": ""
+    "description": "Option title for the name of a search engine"
   },
   "configTitleSearchUrl": {
     "message": "Search URL",
-    "description": ""
+    "description": "Option title for the URL of a search engine"
   },
   "configSearchUrlDescription": {
     "message": "Use {searchTerms} as placeholder of searching text",
-    "description": ""
+    "description": "Description of the URL of a search engine; {searchTerms} part should be kept as is when localizing"
   },
   "configTitleIcon": {
     "message": "Icon",
-    "description": ""
+    "description": "Option title for the icon of a search engine"
   },
   "browseButton": {
     "message": "Browse...",
-    "description": ""
+    "description": "Button for selecting icon file for search engine option"
   },
   "configTitleStatus": {
     "message": "Status",
-    "description": ""
+    "description": "Option title for the status of a search engine (enable / disabled)"
   },
   "configStatusEnabled": {
     "message": "Enabled",
-    "description": ""
+    "description": "Option description for the enable status of a search engine"
   },
   "moveUpButton": {
     "message": "Move Up",
-    "description": ""
+    "description": "Button for moving a search engine one item up in the list"
   },
   "moveDownButton": {
     "message": "Move Down",
-    "description": ""
+    "description": "Button for moving a search engine one item down in the list"
   },
   "saveButton": {
     "message": "Save",
-    "description": ""
+    "description": "Button for confirming the editing of selected search engine"
   },
   "removeButton": {
     "message": "Remove",
-    "description": ""
+    "description": "Button for removing a search engine from the list"
   }
 }

@@ -1,0 +1,53 @@
+{
+  "extensionName": {
+    "message": "Classical Search Bar"
+  },
+  "extensionDescription": {
+    "message": "添加一个搜索引擎快速切换按钮以模拟经典搜索框的行为。"
+  },
+  "extensionButtonTitle": {
+    "message": "搜索…"
+  },
+  "addButton": {
+    "message": "添加"
+  },
+  "resetButton": {
+    "message": "重置列表"
+  },
+  "resetButtonSecondTime": {
+    "message": "确认重置"
+  },
+  "configTitleName": {
+    "message": "名称"
+  },
+  "configTitleSearchUrl": {
+    "message": "搜索页面网址"
+  },
+  "configSearchUrlDescription": {
+    "message": "在网址中使用 {searchTerms} 表示要搜索的内容"
+  },
+  "configTitleIcon": {
+    "message": "图标"
+  },
+  "browseButton": {
+    "message": "浏览…"
+  },
+  "configTitleStatus": {
+    "message": "状态"
+  },
+  "configStatusEnabled": {
+    "message": "启用"
+  },
+  "moveUpButton": {
+    "message": "上移"
+  },
+  "moveDownButton": {
+    "message": "下移"
+  },
+  "saveButton": {
+    "message": "保存"
+  },
+  "removeButton": {
+    "message": "删除"
+  }
+}

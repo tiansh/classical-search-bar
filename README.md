@@ -14,4 +14,4 @@ We collect nothing.
 
 All source code and materials of this extension is licensed under the Mozilla Public License 2.0.
 
-Search engine icons included in the source code may contain treadmarks.
+Search engine icons included in the source code may contain tread marks.

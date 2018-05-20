@@ -173,11 +173,14 @@
       const searchTerms = url.searchParams.get('searchTerms') || '';
       const defaultSp = config.getDefault();
       const baseUrl = type === 'search' ? defaultSp.search_url : type === 'suggest' ? defaultSp.suggest_url : null;
-      const redirectUrl = baseUrl.replace('{searchTerms}', () => searchTerms);
+      const redirectUrl = baseUrl.replace('{searchTerms}', () => encodeURIComponent(searchTerms));
       return { redirectUrl };
     } catch (_ignore) { /* fallthrough */ }
     return { cancel: true };
-  }, { urls: ['https://6905b838-e843-4ee3-9df0-b4c79673b21c.invalid/*'] }, ['blocking']);
+  }, {
+    urls: ['https://6905b838-e843-4ee3-9df0-b4c79673b21c.invalid/*'],
+    types: ['main_frame'],
+  }, ['blocking']);
 
   const updateIcon = function () {
     browser.browserAction.setIcon({ path: config.getDefault().favicon_url });

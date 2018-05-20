@@ -151,10 +151,22 @@
     focusItem(currentList[Math.min(index, currentList.length - 1)].id);
   });
 
-  document.getElementById('resetbutton').addEventListener('click', async () => {
+  const resetButton = document.getElementById('resetbutton');
+  const realResetButton = document.getElementById('realresetbutton');
+  const showResetButton = function (show) {
+    resetButton.style.display = !show ? 'inline' : 'none';
+    realResetButton.style.display = show ? 'inline' : 'none';
+  };
+  realResetButton.addEventListener('click', async () => {
+    showResetButton(false);
     await callBackend.resetList();
     initialList();
   });
+  resetButton.addEventListener('click', async () => {
+    showResetButton(true);
+    setTimeout(() => { showResetButton(false); }, 3000);
+  });
+  showResetButton(false);
 
   const movebuttons = diff => {
     return async () => {
