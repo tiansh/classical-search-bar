@@ -82,7 +82,7 @@
     return new Proxy(rawObject, {
       get: (obj, prop) => obj[prop],
       set: (obj, prop, value) => {
-        if (['id', 'name', 'search_url', 'favicon_url', 'active'].includes(prop)) {
+        if (['id', 'name', 'search_url', 'favicon_url', 'active', 'search_from'].includes(prop)) {
           obj[prop] = value;
           if (prop === 'id') highlightItem(value);
           else renderProp(prop, value);
@@ -113,6 +113,7 @@
       name: '',
       search_url: '',
       favicon_url: defaultFavicon,
+      search_from: '',
       active: true,
     });
   };
@@ -138,9 +139,17 @@
   });
 
   document.getElementById('savebutton').addEventListener('click', async () => {
-    const savedItem = await callBackend.saveItem(Object.assign({}, currentItem));
-    await renderList();
-    focusItem(savedItem.id);
+    try {
+      const savedItem = await callBackend.saveItem(Object.assign({}, currentItem));
+      await renderList();
+      focusItem(savedItem.id);
+    } catch (_ignore) {
+      const spdetail = document.getElementById('spdetail');
+      spdetail.classList.add('form-invalid');
+      setTimeout(() => {
+        spdetail.classList.remove('form-invalid');
+      }, 1000);
+    }
   });
 
   document.getElementById('removebutton').addEventListener('click', async () => {

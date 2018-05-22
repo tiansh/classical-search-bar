@@ -8,22 +8,25 @@
     browser.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
       const { method, params = [] } = request;
       const handler = exported.get(method);
-      const response = await handler(...params);
-      return response;
+      return new Promise(async (resolve, reject) => {
+        try { resolve(await handler(...params)); }
+        catch (ex) { reject(ex); }
+      });
     });
 
     return f => {
       exported.set(f.name, f);
-      return (...args) => Promise.resolve(f(...args));
+      return f;
     };
   }());
 
   const copySearchProvider = sp => ({
     id: +sp.id,
     name: '' + sp.name,
-    search_url: '' + sp.search_url,
-    favicon_url: '' + sp.favicon_url,
-    suggest_url: sp.suggest_url ? '' + sp.suggest_url : null,
+    search_url: new URL('' + sp.search_url).href,
+    favicon_url: new URL('' + sp.favicon_url).href,
+    suggest_url: sp.suggest_url ? new URL('' + sp.suggest_url).href : '',
+    search_from: (sp.search_from ? new URL('' + sp.search_from) : new URL('/', '' + sp.search_url)).href,
     active: !!sp.active,
     is_default: !!sp.is_default,
   });
@@ -172,7 +175,11 @@
       const type = url.pathname.slice(1);
       const searchTerms = url.searchParams.get('searchTerms') || '';
       const defaultSp = config.getDefault();
-      const baseUrl = type === 'search' ? defaultSp.search_url : type === 'suggest' ? defaultSp.suggest_url : null;
+      const baseUrl = {
+        search: sp => sp.search_url,
+        suggest: sp => sp.suggest_url,
+        '': sp => sp.search_from || new URL('/', sp.search_url).href,
+      }[type](defaultSp);
       const redirectUrl = baseUrl.replace('{searchTerms}', () => encodeURIComponent(searchTerms));
       return { redirectUrl };
     } catch (_ignore) { /* fallthrough */ }

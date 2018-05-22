@@ -114,4 +114,8 @@ input[type="text"] {
   float: left;
   margin-left: 0;
   margin-right: 10px;
+} 
+
+.form-invalid #savebutton {
+  color: red;
 }

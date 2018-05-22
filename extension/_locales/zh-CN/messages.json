@@ -20,6 +20,9 @@
   "configTitleName": {
     "message": "名称"
   },
+  "configTitleHomePage": {
+    "message": "首页网址"
+  },
   "configTitleSearchUrl": {
     "message": "搜索页面网址"
   },

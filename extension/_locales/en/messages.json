@@ -27,9 +27,13 @@
     "message": "Name",
     "description": "Option title for the name of a search engine"
   },
+  "configTitleHomePage": {
+    "message": "Home Page",
+    "description": "Option title for the home page URL of a search engine"
+  },
   "configTitleSearchUrl": {
     "message": "Search URL",
-    "description": "Option title for the URL of a search engine"
+    "description": "Option title for the searching URL of a search engine"
   },
   "configSearchUrlDescription": {
     "message": "Use {searchTerms} as placeholder of searching text",
