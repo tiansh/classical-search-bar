@@ -38,9 +38,14 @@ body {
   margin: 0 -10px;
   overflow-x: hidden;
   overflow-y: auto;
+  outline: none;
 }
 #splist .current {
   background-color: #48c3;
+}
+#splist:focus .current {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 #splist .panel-list-item {
@@ -79,6 +84,21 @@ body {
 
 input[type="text"] {
   width: calc(100% - 20px);
+}
+
+.browser-style > input[type="checkbox"] {
+  display: inline;
+  -moz-appearance: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  border: 0 none;
+}
+
+.browser-style > input[type="checkbox"]:focus + label::before {
+  box-shadow: 0 0 0 2px rgba(97, 181, 255, 0.75);
+  transition-duration: 250ms;
+  transition-property: box-shadow;
 }
 
 .config-description {

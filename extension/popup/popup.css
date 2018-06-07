@@ -1,7 +1,17 @@
 .panel {
   transform: scale(1);
-  width: 240px;
+  min-width: 240px;
   white-space: nowrap;
+}
+
+.panel-list-item.current {
+  background-color: rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.panel-list-item.current:active {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .panel .text {

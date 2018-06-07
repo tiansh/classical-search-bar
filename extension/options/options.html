@@ -10,37 +10,37 @@
 <body>
   <div id="config_panel">
     <div id="spinfo">
-      <div id="splist" class="panel-section panel-section-list">
+      <div id="splist" class="panel-section panel-section-list" tabindex="2">
         <template id="spitem">
           <div class="panel-list-item" role="menuitem">
-            <span class="browser-style"><input type="checkbox" /><label></label></span>
+            <span class="browser-style"><input type="checkbox" tabindex="-1" /><label></label></span>
             <div class="icon"><img/></div><div class="text"></div><div class="text-shortcut"></div>
           </div>
         </template>
       </div>
       <div class="button-line">
-        <button id="addbutton" class="browser-style" type="button"><span data-i18n="addButton"></span></button>
-        <button id="resetbutton" class="browser-style" type="button"><span data-i18n="resetButton"></span></button>
-        <button id="realresetbutton" class="browser-style" type="button"><span data-i18n="resetButtonSecondTime"></span></button>
+        <button id="addbutton" class="browser-style" type="button" tabindex="1"><span data-i18n="addButton"></span></button>
+        <button id="resetbutton" class="browser-style" type="button" tabindex="4"><span data-i18n="resetButton"></span></button>
+        <button id="realresetbutton" class="browser-style" type="button" tabindex="4"><span data-i18n="resetButtonSecondTime"></span></button>
       </div>      
     </div>
     <div id="spdetail">
       <div class="panel-section">
         <span class="config-title"><span data-i18n="configTitleName"></span></span>
         <span class="config-content browser-style">
-          <input id="nameinput" type="text" name="name" data-from-input data-form-attr="name" data-form-target="value" />
+          <input id="nameinput" type="text" name="name" data-from-input data-form-attr="name" data-form-target="value" tabindex="3" />
         </span>
       </div>
       <div class="panel-section">
         <span class="config-title"><span data-i18n="configTitleHomePage"></span></span>
         <span class="config-content browser-style">
-          <input type="text" name="name" data-from-input data-form-attr="search_from" data-form-target="value" />
+          <input type="text" name="homepage" data-from-input data-form-attr="search_from" data-form-target="value" tabindex="3" />
         </span>
       </div>
       <div class="panel-section">
         <span class="config-title"><span data-i18n="configTitleSearchUrl"></span></span>
         <span class="config-content browser-style">
-          <input type="text" name="search_url" data-from-input data-form-attr="search_url" data-form-target="value" />
+          <input type="text" name="search_url" data-from-input data-form-attr="search_url" data-form-target="value" tabindex="3" />
           <span class="config-description"><span data-i18n="configSearchUrlDescription"></span></span>
         </span>
       </div>
@@ -48,22 +48,22 @@
         <span class="config-title"><span data-i18n="configTitleIcon"></span></span>
         <span class="config-content browser-style">
           <span class="favicon-preview icon"><img id="faviconimg" data-form-attr="favicon_url" data-form-target="src" /></span>
-          <input id="faviconinput" type="file" name="favicon" />
-          <button id="faviconinputbutton" type="button" class="browser-style"><span data-i18n="browseButton"></span></button>
+          <input id="faviconinput" type="file" name="favicon" tabindex="-1" />
+          <button id="faviconinputbutton" type="button" class="browser-style" tabindex="3"><span data-i18n="browseButton"></span></button>
         </span>
       </div>
       <div class="panel-section">
         <span class="config-title"><span data-i18n="configTitleStatus"></span></span>
         <span class="config-content browser-style">
-          <input id="active" type="checkbox" name="active" data-from-input data-form-attr="active" data-form-target="checked" />
+          <input id="active" type="checkbox" name="active" data-from-input data-form-attr="active" data-form-target="checked" tabindex="3" />
           <label for="active"><span data-i18n="configStatusEnabled"></span></label>
         </span>
       </div>
       <div class="button-line">
-        <button id="moveupbutton" class="browser-style" type="button"><span data-i18n="moveUpButton"></span></button>
-        <button id="movedownbutton" class="browser-style" type="button"><span data-i18n="moveDownButton"></span></button>
-        <button id="savebutton" class="browser-style" type="button"><span data-i18n="saveButton"></span></button>
-        <button id="removebutton" class="browser-style" type="button"><span data-i18n="removeButton"></span></button>
+        <button id="moveupbutton" class="browser-style" type="button" tabindex="2"><span data-i18n="moveUpButton"></span></button>
+        <button id="movedownbutton" class="browser-style" type="button" tabindex="2"><span data-i18n="moveDownButton"></span></button>
+        <button id="savebutton" class="browser-style" type="button" tabindex="3"><span data-i18n="saveButton"></span></button>
+        <button id="removebutton" class="browser-style" type="button" tabindex="3"><span data-i18n="removeButton"></span></button>
       </div>
     </div>
   </div>

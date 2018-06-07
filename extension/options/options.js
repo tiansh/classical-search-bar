@@ -130,12 +130,24 @@
     focusItem(id);
   });
 
+  document.getElementById('splist').addEventListener('keyup', event => {
+    const key = event.keyCode;
+    if ([38, 40].includes(key)) {
+      const index = currentList.findIndex(sp => sp.id === currentItem.id);
+      const next = index + (key === 38 ? -1 : 1);
+      const newIndex = index < 0 ? currentItem.length - 1 :
+        next >= currentItem.length ? 0 : next;
+      focusItem(currentList[newIndex].id);
+    }
+  });
+
   document.getElementById('faviconinputbutton').addEventListener('click', () => {
     document.getElementById('faviconinput').click();
   });
 
   document.getElementById('addbutton').addEventListener('click', () => {
     addItem();
+    document.getElementById('nameinput').focus();
   });
 
   document.getElementById('savebutton').addEventListener('click', async () => {
@@ -163,8 +175,18 @@
   const resetButton = document.getElementById('resetbutton');
   const realResetButton = document.getElementById('realresetbutton');
   const showResetButton = function (show) {
-    resetButton.style.display = !show ? 'inline' : 'none';
-    realResetButton.style.display = show ? 'inline' : 'none';
+    let oldButton, newButton;
+    if (show) {
+      oldButton = resetButton;
+      newButton = realResetButton;
+    } else {
+      oldButton = realResetButton;
+      newButton = resetButton;
+    }
+    let hasFocus = document.activeElement === oldButton;
+    oldButton.style.display = 'none';
+    newButton.style.display = 'inline';
+    if (hasFocus) newButton.focus();
   };
   realResetButton.addEventListener('click', async () => {
     showResetButton(false);

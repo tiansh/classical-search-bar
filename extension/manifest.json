@@ -40,12 +40,17 @@
       "suggested_key": {
         "default": "Ctrl+Shift+Down"
       }
+    },
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Comma"
+      }
     }
   },
 
   "chrome_settings_overrides": {
     "search_provider": {
-      "name": "Classical Search Bar",
+      "name": "CSB",
       "search_url": "https://6905b838-e843-4ee3-9df0-b4c79673b21c.invalid/search?searchTerms={searchTerms}",
       "is_default": true
     }
