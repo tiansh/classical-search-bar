@@ -52,5 +52,20 @@
   },
   "removeButton": {
     "message": "删除"
+  },
+  "backupPanelTitle": {
+    "message":  "设置"
+  },
+  "importOverwriteButton": {
+    "message": "导入并覆盖"
+  },
+  "importAppendButton": {
+    "message": "导入并追加"
+  },
+  "importFailedAlert": {
+    "message": "导入时发生错误。"
+  },
+  "exportButton": {
+    "message": "导出"
   }
 }

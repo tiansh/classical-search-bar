@@ -213,4 +213,85 @@
   document.getElementById('moveupbutton').addEventListener('click', movebuttons(-1));
   document.getElementById('movedownbutton').addEventListener('click', movebuttons(1));
 
+  const exportButton = document.getElementById('exportbutton');
+  exportButton.addEventListener('click', async () => {
+    const searchProviderList = await callBackend.getListAll();
+    const output = searchProviderList.map(sp => ({
+      name: sp.name,
+      search_url: sp.search_url,
+      favicon_url: sp.favicon_url,
+      suggest_url: sp.suggest_url,
+      search_from: sp.search_from,
+      active: sp.active,
+    }));
+    const fileContent = JSON.stringify(output, null, 2) + '\n';
+    const blob = new Blob([fileContent], { type: 'application/octet-binary' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('download', 'classical-search-bar.json');
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => {
+      URL.revokeObjectURL(url);
+      link.parentNode.removeChild(link);
+    }, 0);
+  });
+
+  ; (function () {
+    const parseSearchProviderImport = data => {
+      if (!Array.isArray(data)) throw TypeError();
+      if (!data.length) throw TypeError();
+      const importList = data.map(sp => ({
+        name: (sp.name || '') + '',
+        search_url: (sp.search_url || '') + '',
+        favicon_url: (sp.favicon_url || '') + '',
+        suggest_url: (sp.suggest_url || '') + '',
+        search_from: (sp.search_from || '') + '',
+        active: !!sp.active,
+      }));
+      return importList;
+    };
+
+    let currentMode = null;
+    const importOverwriteButton = document.getElementById('importoverwritebutton');
+    const importAppendButton = document.getElementById('importappendbutton');
+    /** @type {HTMLInputElement} */
+    const importFileButton = document.getElementById('importinput');
+    const importSettings = function () {
+      importFileButton.click();
+    };
+    importOverwriteButton.addEventListener('click', () => {
+      currentMode = 'overwrite';
+      importSettings();
+    });
+    importAppendButton.addEventListener('click', () => {
+      currentMode = 'append';
+      importSettings();
+    });
+    const failedImport = () => {
+      alert(browser.i18n.getMessage('importFailedAlert'));
+    };
+    importFileButton.addEventListener('input', () => {
+      const [file] = importFileButton.files;
+      const reader = new FileReader();
+      reader.addEventListener('load', async () => {
+        try {
+          const data = reader.result;
+          const searchers = parseSearchProviderImport(JSON.parse(data));
+          const importSuccess = await callBackend.importList(searchers, currentMode);
+          if (!importSuccess) throw Error();
+        } catch (e) {
+          failedImport();
+        }
+        await renderList();
+      });
+      reader.addEventListener('error', () => {
+        failedImport();
+      });
+      reader.readAsText(file);
+      importFileButton.value = null;
+    });
+  }());
+
 }());

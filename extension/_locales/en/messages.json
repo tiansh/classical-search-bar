@@ -70,5 +70,25 @@
   "removeButton": {
     "message": "Remove",
     "description": "Button for removing a search engine from the list"
+  },
+  "backupPanelTitle": {
+    "message": "Options",
+    "description": "Title for the import / exporting section"
+  },
+  "importOverwriteButton": {
+    "message": "Import and Overwrite",
+    "description": "Button for import settings from a file"
+  },
+  "importAppendButton": {
+    "message": "Import and Append",
+    "description": "Button for import settings from a file"
+  },
+  "importFailedAlert": {
+    "message": "Something went wrong while importing.",
+    "description": "This text will be alerted to user if import failed"
+  },
+  "exportButton": {
+    "message": "Export",
+    "description": "Button for export settings to a file"
   }
 }

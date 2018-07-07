@@ -128,6 +128,18 @@
       ({ list, default_sp } = await resetConfig());
       setDefaultCallback.forEach(f => f());
     };
+    const importList = async function (spList, mode) {
+      if (!spList || !spList.length) return false;
+      if (mode === 'overwrite') list.splice(0);
+      let id = 1; while (list.find(sp => sp.id === id)) id++;
+      spList.forEach(sp => {
+        const item = Object.assign(copySearchProvider(sp), { id: id++ });
+        list.push(item);
+      });
+      await saveList(list);
+      setDefault(spList[0]);
+      return true;
+    };
     return {
       getList,
       getListAll,
@@ -139,6 +151,7 @@
       moveItem,
       removeItem,
       resetList,
+      importList,
     };
   }());
 
@@ -146,9 +159,6 @@
     return config.getList().map(copySearchProvider);
   });
   messageExport(function getListAll() {
-    return config.getListAll().map(copySearchProvider);
-  });
-  messageExport(function addSearchProvider(sp) {
     return config.getListAll().map(copySearchProvider);
   });
   messageExport(function setDefault(id) {
@@ -166,6 +176,9 @@
   });
   messageExport(function resetList() {
     return config.resetList();
+  });
+  messageExport(function importList(spList, mode) {
+    return config.importList(spList, mode);
   });
 
   // Redirect search request to fake search provider to the one user selected
