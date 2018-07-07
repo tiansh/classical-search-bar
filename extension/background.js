@@ -161,6 +161,9 @@
   messageExport(function getListAll() {
     return config.getListAll().map(copySearchProvider);
   });
+  messageExport(function getDefault(id) {
+    return config.getDefault();
+  });
   messageExport(function setDefault(id) {
     config.setDefault(config.getList().find(sp => sp.id === id));
   });

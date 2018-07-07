@@ -11,8 +11,9 @@
   });
 
   const searchProviderListPromise = callBackend.getList();
+  const currentSearchProviderPromise = callBackend.getDefault();
 
-  Promise.all([domReady, searchProviderListPromise]).then(([, searchProviderList]) => {
+  Promise.all([domReady, searchProviderListPromise, currentSearchProviderPromise]).then(([, searchProviderList, defaultSearchProvider]) => {
     const menu = document.getElementById('menu');
     const menuItems = document.createDocumentFragment();
     searchProviderList.forEach(({ id, name, favicon_url }) => {
@@ -25,6 +26,11 @@
       menuIcon.src = favicon_url;
       const menuItem = content.querySelector('.panel-list-item');
       menuItem.dataset.id = id;
+      if (id === defaultSearchProvider.id) {
+        menuItem.classList.add('current');
+      } else {
+        menuItem.classList.remove('current');
+      }
       menuItems.appendChild(document.importNode(menuItem, true));
     });
     menu.appendChild(menuItems);
