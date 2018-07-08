@@ -79,13 +79,19 @@
       spdetail.classList.remove('edit-form', 'create-form');
       spdetail.classList.add(id ? 'edit-form' : 'create-form');
     };
+    const showHidePostParams = function (value) {
+      const postParams = document.getElementById('postparams');
+      if (value) postParams.style.display = '';
+      else postParams.style.display = 'none';
+    };
     return new Proxy(rawObject, {
       get: (obj, prop) => obj[prop],
       set: (obj, prop, value) => {
-        if (['id', 'name', 'search_url', 'favicon_url', 'active', 'search_from'].includes(prop)) {
+        if (['id', 'name', 'search_url', 'favicon_url', 'active', 'search_from', 'search_url_post_params'].includes(prop)) {
           obj[prop] = value;
           if (prop === 'id') highlightItem(value);
           else renderProp(prop, value);
+          if (prop === 'search_url_post_params') showHidePostParams(value);
         }
         return true;
       },
@@ -114,6 +120,7 @@
       search_url: '',
       favicon_url: defaultFavicon,
       search_from: '',
+      search_url_post_params: null,
       active: true,
     });
   };
@@ -222,6 +229,7 @@
       favicon_url: sp.favicon_url,
       suggest_url: sp.suggest_url,
       search_from: sp.search_from,
+      search_url_post_params: sp.search_url_post_params || '',
       active: sp.active,
     }));
     const fileContent = JSON.stringify(output, null, 2) + '\n';
@@ -245,9 +253,10 @@
       const importList = data.map(sp => ({
         name: (sp.name || '') + '',
         search_url: (sp.search_url || '') + '',
-        favicon_url: (sp.favicon_url || '') + '',
+        favicon_url: (sp.favicon_url || defaultFavicon) + '',
         suggest_url: (sp.suggest_url || '') + '',
         search_from: (sp.search_from || '') + '',
+        search_url_post_params: ((sp.search_url_post_params || '') + '') || null,
         active: !!sp.active,
       }));
       return importList;

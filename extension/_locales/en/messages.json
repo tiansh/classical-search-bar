@@ -35,6 +35,10 @@
     "message": "Search URL",
     "description": "Option title for the searching URL of a search engine"
   },
+  "configTitleSearchUrlPostParameters": {
+    "message": "Post Parameters",
+    "description": "Option title for the post parameters of searching URL"
+  },
   "configSearchUrlDescription": {
     "message": "Use {searchTerms} as placeholder of searching text",
     "description": "Description of the URL of a search engine; {searchTerms} part should be kept as is when localizing"

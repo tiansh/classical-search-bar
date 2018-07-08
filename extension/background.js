@@ -27,6 +27,7 @@
     favicon_url: new URL('' + sp.favicon_url).href,
     suggest_url: sp.suggest_url ? new URL('' + sp.suggest_url).href : '',
     search_from: (sp.search_from ? new URL('' + sp.search_from) : new URL('/', '' + sp.search_url)).href,
+    search_url_post_params: sp.search_url_post_params ? '' + sp.search_url_post_params : null,
     active: !!sp.active,
     is_default: !!sp.is_default,
   });
@@ -97,14 +98,14 @@
     };
     const addItem = async function (sp) {
       let id = 1; while (list.find(sp => sp.id === id)) id++;
-      const item = Object.assign(copySearchProvider(sp), { id });
+      const item = Object.assign(copySearchProvider(sp), { id, is_default: false });
       list.push(item);
       await saveList(list);
       return item;
     };
     const setItem = async function (id, sp) {
       const item = list.find(sp => sp.id === id);
-      Object.assign(item, copySearchProvider(sp));
+      Object.assign(item, copySearchProvider(sp), { is_default: item.is_default });
       if (!item.active) item.is_default = false;
       await saveList(list);
       return item;
@@ -130,14 +131,20 @@
     };
     const importList = async function (spList, mode) {
       if (!spList || !spList.length) return false;
-      if (mode === 'overwrite') list.splice(0);
-      let id = 1; while (list.find(sp => sp.id === id)) id++;
-      spList.forEach(sp => {
-        const item = Object.assign(copySearchProvider(sp), { id: id++ });
-        list.push(item);
-      });
-      await saveList(list);
-      setDefault(spList[0]);
+      const listBackup = list.slice(0);
+      try {
+        if (mode === 'overwrite') list.splice(0);
+        let id = 1; while (list.find(sp => sp.id === id)) id++;
+        spList.map(copySearchProvider).forEach(sp => {
+          const item = Object.assign(sp, { id: id++ });
+          list.push(item);
+        });
+        setDefault(normalizeConfig(list));
+        await saveList(list);
+      } catch (_ignore) {
+        list.splice(0, list.length, ...listBackup);
+        return false;
+      }
       return true;
     };
     return {
@@ -184,19 +191,38 @@
     return config.importList(spList, mode);
   });
 
+  const getUrl = function (type, searchTerms) {
+    const defaultSp = config.getDefault();
+    const placeSearchTerms = url => (
+      url.replace(/\{searchTerms\}/g, () => encodeURIComponent(searchTerms))
+    );
+    if (type === 'search') {
+      const url = placeSearchTerms(defaultSp.search_url);
+      if (!defaultSp.search_url_post_params) {
+        return url;
+      } else {
+        const postPage = new URL(browser.extension.getURL('/post/post.html'));
+        const postParams = placeSearchTerms(defaultSp.search_url_post_params);
+        postPage.searchParams.set('url', url);
+        postPage.searchParams.set('post', postParams);
+        return postPage.href;
+      }
+    } else if (type === 'suggest') {
+      return placeSearchTerms(defaultSp.suggest_url);
+    } else if (type === '') {
+      return defaultSp.search_from || new URL('/', defaultSp.search_url).href;
+    } else {
+      return null;
+    }
+  };
+
   // Redirect search request to fake search provider to the one user selected
   browser.webRequest.onBeforeRequest.addListener(details => {
     try {
       const url = new URL(details.url);
       const type = url.pathname.slice(1);
       const searchTerms = url.searchParams.get('searchTerms') || '';
-      const defaultSp = config.getDefault();
-      const baseUrl = {
-        search: sp => sp.search_url,
-        suggest: sp => sp.suggest_url,
-        '': sp => sp.search_from || new URL('/', sp.search_url).href,
-      }[type](defaultSp);
-      const redirectUrl = baseUrl.replace('{searchTerms}', () => encodeURIComponent(searchTerms));
+      const redirectUrl = getUrl(type, searchTerms);
       return { redirectUrl };
     } catch (_ignore) { /* fallthrough */ }
     return { cancel: true };

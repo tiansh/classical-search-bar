@@ -26,6 +26,9 @@
   "configTitleSearchUrl": {
     "message": "搜索页面网址"
   },
+  "configTitleSearchUrlPostParameters": {
+    "message": "POST 参数"
+  },
   "configSearchUrlDescription": {
     "message": "在网址中使用 {searchTerms} 表示要搜索的内容"
   },

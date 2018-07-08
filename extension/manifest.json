@@ -11,7 +11,8 @@
   },
 
   "permissions": [
-    "webRequest", "webRequestBlocking",
+    "webRequest",
+    "webRequestBlocking",
     "https://6905b838-e843-4ee3-9df0-b4c79673b21c.invalid/*",
     "storage"
   ],
@@ -60,7 +61,11 @@
     "browser_style": true,
     "page": "options/options.html"
   },
-  
+
+  "web_accessible_resources": [
+    "post/post.html"
+  ],
+
   "applications": {
     "gecko": {
       "id": "{6905b838-e843-4ee3-9df0-b4c79673b21c}",
