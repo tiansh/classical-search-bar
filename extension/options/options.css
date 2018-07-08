@@ -10,19 +10,21 @@ body {
   margin: 1px;
 }
 
+#spinfo, #spdetail {
+  border: 1px solid #80808033;
+  position: relative;
+  min-width: 0;
+}
+
 #spinfo {
   flex: 0 0 240px;
   padding: 10px 10px 30px;
-  border: 1px solid #80808033;
-  position: relative;
 }
 
 #spdetail {
-  flex: 1 0 auto;
+  flex: 1 0 calc(100% - 240px);
   padding: 0 10px 30px;
-  border: 1px solid #80808033;
   margin-left: -1px;
-  position: relative;
 }
 
 .button-line {
