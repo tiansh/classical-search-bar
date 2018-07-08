@@ -75,9 +75,9 @@
         menuitem.classList.remove('current');
         if (+menuitem.dataset.id === id) menuitem.classList.add('current');
       });
-      const spdetail = document.getElementById('spdetail');
-      spdetail.classList.remove('edit-form', 'create-form');
-      spdetail.classList.add(id ? 'edit-form' : 'create-form');
+      const configPanel = document.getElementById('config_panel');
+      configPanel.classList.remove('edit-form', 'create-form');
+      configPanel.classList.add(id ? 'edit-form' : 'create-form');
     };
     const showHidePostParams = function (value) {
       const postParams = document.getElementById('postparams');

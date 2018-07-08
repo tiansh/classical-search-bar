@@ -115,9 +115,9 @@ input[type="text"] {
   vertical-align: -5px;
 }
 
-#spdetail.create-form #removebutton,
-#spdetail.create-form #moveupbutton,
-#spdetail.create-form #movedownbutton {
+.create-form #removebutton,
+.create-form #moveupbutton,
+.create-form #movedownbutton {
   display: none;
 }
 
