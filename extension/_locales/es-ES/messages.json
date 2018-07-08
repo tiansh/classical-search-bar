@@ -1,0 +1,74 @@
+{
+  "extensionName": {
+    "message": "Classical Search Bar"
+  },
+  "extensionDescription": {
+    "message": "Simula la barra de búsqueda clásica agregando un botón para cambiar el motor de búsqueda."
+  },
+  "extensionButtonTitle": {
+    "message": "Buscar por..."
+  },
+  "addButton": {
+    "message": "Añadir"
+  },
+  "resetButton": {
+    "message": "Restaurar valor predeterminado"
+  },
+  "resetButtonSecondTime": {
+    "message": "Haga clic de nuevo para confirmar"
+  },
+  "configTitleName": {
+    "message": "Nombre"
+  },
+  "configTitleHomePage": {
+    "message": "Página de Inicio"
+  },
+  "configTitleSearchUrl": {
+    "message": "Buscar URL"
+  },
+  "configTitleSearchUrlPostParameters": {
+    "message": "Parámetros POST"
+  },
+  "configSearchUrlDescription": {
+    "message": "Escriba {searchTerms} como marcador de posición para los términos de búsqueda."
+  },
+  "configTitleIcon": {
+    "message": "Icono"
+  },
+  "browseButton": {
+    "message": "Buscar..."
+  },
+  "configTitleStatus": {
+    "message": "Estado"
+  },
+  "configStatusEnabled": {
+    "message": "Activado"
+  },
+  "moveUpButton": {
+    "message": "Mover Arriba"
+  },
+  "moveDownButton": {
+    "message": "Mover Abajo"
+  },
+  "saveButton": {
+    "message": "Guardar"
+  },
+  "removeButton": {
+    "message": "Eliminar"
+  },
+  "backupPanelTitle": {
+    "message": "Opciones"
+  },
+  "importOverwriteButton": {
+    "message": "Importar y Sobrescribir"
+  },
+  "importAppendButton": {
+    "message": "Importar y Añadir"
+  },
+  "importFailedAlert": {
+    "message": "Algo salió mal al importar."
+  },
+  "exportButton": {
+    "message": "Exportar"
+  }
+}
