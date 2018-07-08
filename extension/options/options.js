@@ -221,9 +221,9 @@
   document.getElementById('movedownbutton').addEventListener('click', movebuttons(1));
 
   const exportButton = document.getElementById('exportbutton');
-  exportButton.addEventListener('click', async () => {
+  const getExportData = async function () {
     const searchProviderList = await callBackend.getListAll();
-    const output = searchProviderList.map(sp => ({
+    const search_providers = searchProviderList.map(sp => ({
       name: sp.name,
       search_url: sp.search_url,
       favicon_url: sp.favicon_url,
@@ -232,6 +232,18 @@
       search_url_post_params: sp.search_url_post_params || '',
       active: sp.active,
     }));
+    return {
+      version: 1,
+      min_version: 1,
+      extension: {
+        name: browser.i18n.getMessage('extensionName'),
+        version: browser.runtime.getManifest().version,
+      },
+      search_providers,
+    };
+  };
+  exportButton.addEventListener('click', async () => {
+    const output = await getExportData();
     const fileContent = JSON.stringify(output, null, 2) + '\n';
     const blob = new Blob([fileContent], { type: 'application/octet-binary' });
     const url = URL.createObjectURL(blob);
@@ -248,9 +260,11 @@
 
   ; (function () {
     const parseSearchProviderImport = data => {
-      if (!Array.isArray(data)) throw TypeError();
-      if (!data.length) throw TypeError();
-      const importList = data.map(sp => ({
+      if (!+data.min_version || data.min_version > 1) throw TypeError();
+      const searchList = data.search_providers;
+      if (!Array.isArray(searchList)) throw TypeError();
+      if (!searchList.length) throw TypeError();
+      const importList = searchList.map(sp => ({
         name: (sp.name || '') + '',
         search_url: (sp.search_url || '') + '',
         favicon_url: (sp.favicon_url || defaultFavicon) + '',
