@@ -1,56 +1,56 @@
 {
   "extensionName": {
-    "message": "Classical Search Bar",
+    "message": "Classical Search Bar"
   },
   "extensionDescription": {
-    "message": "Simula la barra de búsqueda clásica agregando un botón para cambiar el motor de búsqueda.",
+    "message": "Simula la barra de búsqueda clásica agregando un botón para cambiar el motor de búsqueda."
   },
   "extensionButtonTitle": {
-    "message": "Buscar por...",
+    "message": "Buscar por..."
   },
   "addButton": {
-    "message": "Añadir",
+    "message": "Añadir"
   },
   "resetButton": {
-    "message": "Restaurar por defecto",
+    "message": "Restaurar valor predeterminado"
   },
   "resetButtonSecondTime": {
-    "message": "Haga clic de nuevo para confirmar",
+    "message": "Haga clic de nuevo para confirmar"
   },
   "configTitleName": {
-    "message": "Nombre",
+    "message": "Nombre"
   },
   "configTitleHomePage": {
-    "message": "Página de Inicio",
+    "message": "Página de Inicio"
   },
   "configTitleSearchUrl": {
-    "message": "Buscar URL",
+    "message": "Buscar URL"
   },
   "configSearchUrlDescription": {
-    "message": "Escriba {searchTerms} como marcador de posición para los términos de búsqueda.",
+    "message": "Escriba {searchTerms} como marcador de posición para los términos de búsqueda."
   },
   "configTitleIcon": {
-    "message": "Icono",
+    "message": "Icono"
   },
   "browseButton": {
-    "message": "Buscar...",
+    "message": "Buscar..."
   },
   "configTitleStatus": {
-    "message": "Estado",
+    "message": "Estado"
   },
   "configStatusEnabled": {
-    "message": "Activado",
+    "message": "Activado"
   },
   "moveUpButton": {
-    "message": "Mover Arriba",
+    "message": "Mover Arriba"
   },
   "moveDownButton": {
-    "message": "Mover Abajo",
+    "message": "Mover Abajo"
   },
   "saveButton": {
-    "message": "Guardar",
+    "message": "Guardar"
   },
   "removeButton": {
-    "message": "Eliminar",
+    "message": "Eliminar"
   }
 }
