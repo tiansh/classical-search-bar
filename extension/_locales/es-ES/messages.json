@@ -30,7 +30,7 @@
     "message": "Parámetros POST"
   },
   "configSearchUrlDescription": {
-    "message": "Escriba {searchTerms} como marcador de posición para los términos de búsqueda"
+    "message": "Escriba {searchTerms} como marcador de posición para los términos de búsqueda."
   },
   "configTitleIcon": {
     "message": "Icono"
