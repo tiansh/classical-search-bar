@@ -26,8 +26,11 @@
   "configTitleSearchUrl": {
     "message": "Buscar URL"
   },
+  "configTitleSearchUrlPostParameters": {
+    "message": "Parámetros POST"
+  },
   "configSearchUrlDescription": {
-    "message": "Escriba {searchTerms} como marcador de posición para los términos de búsqueda."
+    "message": "Escriba {searchTerms} como marcador de posición para los términos de búsqueda"
   },
   "configTitleIcon": {
     "message": "Icono"
@@ -52,5 +55,20 @@
   },
   "removeButton": {
     "message": "Eliminar"
+  },
+  "backupPanelTitle": {
+    "message": "Opciones"
+  },
+  "importOverwriteButton": {
+    "message": "Importar y Sobrescribir"
+  },
+  "importAppendButton": {
+    "message": "Importar y Añadir"
+  },
+  "importFailedAlert": {
+    "message": "Algo salió mal al importar."
+  },
+  "exportButton": {
+    "message": "Exportar"
   }
 }
