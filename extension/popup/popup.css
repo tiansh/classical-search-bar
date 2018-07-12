@@ -1,3 +1,8 @@
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .panel {
   transform: scale(1);
   min-width: 240px;
