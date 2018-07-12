@@ -87,7 +87,7 @@
     return new Proxy(rawObject, {
       get: (obj, prop) => obj[prop],
       set: (obj, prop, value) => {
-        if (['id', 'name', 'search_url', 'favicon_url', 'active', 'search_from', 'search_url_post_params'].includes(prop)) {
+        if (['id', 'name', 'search_url', 'favicon_url', 'active', 'search_form', 'search_url_post_params'].includes(prop)) {
           obj[prop] = value;
           if (prop === 'id') highlightItem(value);
           else renderProp(prop, value);
@@ -119,7 +119,7 @@
       name: '',
       search_url: '',
       favicon_url: defaultFavicon,
-      search_from: '',
+      search_form: '',
       search_url_post_params: null,
       active: true,
     });
@@ -228,7 +228,7 @@
       search_url: sp.search_url,
       favicon_url: sp.favicon_url,
       suggest_url: sp.suggest_url,
-      search_from: sp.search_from,
+      search_form: sp.search_form,
       search_url_post_params: sp.search_url_post_params || '',
       active: sp.active,
     }));
@@ -269,7 +269,7 @@
         search_url: (sp.search_url || '') + '',
         favicon_url: (sp.favicon_url || defaultFavicon) + '',
         suggest_url: (sp.suggest_url || '') + '',
-        search_from: (sp.search_from || '') + '',
+        search_form: (sp.search_form || '') + '',
         search_url_post_params: ((sp.search_url_post_params || '') + '') || null,
         active: !!sp.active,
       }));

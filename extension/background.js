@@ -26,7 +26,7 @@
     search_url: new URL('' + sp.search_url).href,
     favicon_url: new URL('' + sp.favicon_url).href,
     suggest_url: sp.suggest_url ? new URL('' + sp.suggest_url).href : '',
-    search_from: (sp.search_from ? new URL('' + sp.search_from) : new URL('/', '' + sp.search_url)).href,
+    search_form: (sp.search_form ? new URL('' + sp.search_form) : new URL('/', '' + sp.search_url)).href,
     search_url_post_params: sp.search_url_post_params ? '' + sp.search_url_post_params : null,
     active: !!sp.active,
     is_default: !!sp.is_default,
@@ -210,7 +210,7 @@
     } else if (type === 'suggest') {
       return placeSearchTerms(defaultSp.suggest_url);
     } else if (type === '') {
-      return defaultSp.search_from || new URL('/', defaultSp.search_url).href;
+      return defaultSp.search_form || new URL('/', defaultSp.search_url).href;
     } else {
       return null;
     }
