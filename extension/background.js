@@ -70,7 +70,7 @@
       }
     };
     const resetConfig = async function () {
-      return writeConfig(defaultProviderList());
+      return writeConfig(window.getDefaultSearchProviderList());
     };
 
     const setDefaultCallback = [];
