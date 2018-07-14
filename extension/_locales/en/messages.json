@@ -39,6 +39,10 @@
     "message": "Post Parameters",
     "description": "Option title for the post parameters of searching URL"
   },
+  "configTitleEncoding": {
+    "message": "Character Encoding",
+    "description": "Option title for the input encoding of search terms"
+  },
   "configSearchUrlDescription": {
     "message": "Use {searchTerms} as placeholder of searching text",
     "description": "Description of the URL of a search engine; {searchTerms} part should be kept as is when localizing"

@@ -29,6 +29,9 @@
   "configTitleSearchUrlPostParameters": {
     "message": "POST 参数"
   },
+  "configTitleEncoding": {
+    "message": "字符编码"
+  },
   "configSearchUrlDescription": {
     "message": "在网址中使用 {searchTerms} 表示要搜索的内容"
   },

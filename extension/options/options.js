@@ -16,7 +16,7 @@
       const i18n = span.dataset.i18n;
       const text = browser.i18n.getMessage(i18n);
       span.textContent = text;
-    });  
+    });
   }());
 
   const defaultFavicon = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgd2lkdGg9IjEyOHB4IiBoZWlnaHQ9IjEyOHB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBmaWxsPSJjb250ZXh0LWZpbGwiIGZpbGwtb3BhY2l0eT0iY29udGV4dC1maWxsLW9wYWNpdHkiPg0KPHBhdGggZD0ibTYgMWE1IDUgMCAwIDAgMCAxMGE1IDUgMCAwIDAgMCAtMTB2MmEzIDMgMCAwIDEgMCA2YTIgMiAwIDAgMSAwIC02TTkuODI4IDguNDE0bC0xLjQxNCAxLjQxNEwxMi41ODU4IDE0QTEgMSAwIDAgMCAxNCAxMi41ODU4eiIvPg0KPC9zdmc+';
@@ -84,14 +84,30 @@
       if (value) postParams.style.display = '';
       else postParams.style.display = 'none';
     };
+    const showHideEncoding = function (value) {
+      const encoding = document.getElementById('encoding');
+      if (value) encoding.style.display = '';
+      else encoding.style.display = 'none';
+    };
     return new Proxy(rawObject, {
       get: (obj, prop) => obj[prop],
       set: (obj, prop, value) => {
-        if (['id', 'name', 'search_url', 'favicon_url', 'active', 'search_form', 'search_url_post_params'].includes(prop)) {
+        const all = [
+          'id',
+          'name',
+          'search_url',
+          'favicon_url',
+          'active',
+          'search_form',
+          'search_url_post_params',
+          'encoding',
+        ];
+        if (all.includes(prop)) {
           obj[prop] = value;
           if (prop === 'id') highlightItem(value);
           else renderProp(prop, value);
           if (prop === 'search_url_post_params') showHidePostParams(value);
+          if (prop === 'encoding') showHideEncoding(value);
         }
         return true;
       },
@@ -121,6 +137,7 @@
       favicon_url: defaultFavicon,
       search_form: '',
       search_url_post_params: null,
+      encoding: null,
       active: true,
     });
   };
@@ -230,6 +247,7 @@
       suggest_url: sp.suggest_url,
       search_form: sp.search_form,
       search_url_post_params: sp.search_url_post_params || '',
+      encoding: sp.encoding || '',
       active: sp.active,
     }));
     return {
@@ -271,6 +289,7 @@
         suggest_url: (sp.suggest_url || '') + '',
         search_form: (sp.search_form || '') + '',
         search_url_post_params: ((sp.search_url_post_params || '') + '') || null,
+        encoding: ((sp.encoding || '') + '') || null,
         active: !!sp.active,
       }));
       return importList;

@@ -26,11 +26,14 @@
   "configTitleSearchUrl": {
     "message": "Buscar URL"
   },
+  "configSearchUrlDescription": {
+    "message": "Escriba {searchTerms} como marcador de posición para los términos de búsqueda."
+  },
   "configTitleSearchUrlPostParameters": {
     "message": "Parámetros POST"
   },
-  "configSearchUrlDescription": {
-    "message": "Escriba {searchTerms} como marcador de posición para los términos de búsqueda."
+  "configTitleEncoding": {
+    "message": "Codificación de Caracteres"
   },
   "configTitleIcon": {
     "message": "Icono"

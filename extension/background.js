@@ -1,6 +1,8 @@
-/* global defaultProviderList */
+/* global getDefaultSearchProviderList */
 
 ; (async function () {
+  const DOMAIN = '6905b838-e843-4ee3-9df0-b4c79673b21c.invalid';
+
   const messageExport = (function () {
     /** @type {Map<string, Function>} */
     const exported = new Map();
@@ -28,6 +30,7 @@
     suggest_url: sp.suggest_url ? new URL('' + sp.suggest_url).href : '',
     search_form: (sp.search_form ? new URL('' + sp.search_form) : new URL('/', '' + sp.search_url)).href,
     search_url_post_params: sp.search_url_post_params ? '' + sp.search_url_post_params : null,
+    encoding: sp.encoding ? '' + sp.encoding : null,
     active: !!sp.active,
     is_default: !!sp.is_default,
   });
@@ -191,24 +194,80 @@
     return config.importList(spList, mode);
   });
 
-  const getUrl = function (type, searchTerms) {
+  // Convert user searchTerms to %hh encoded format
+  // When input encoding is configured as UTF-8, we use `encodeURIComponent` which works great
+  // When input encoding is other values:
+  //   We try to create a form, set accept-charset on the form, put this text in it, and then submit
+  //   We capture the form submit request, and parse encoded string form the url
+  const encodingText = (function () {
+    const resolveEncoding = new Map();
+    let resolveEncodingIndex = 0;
+    const encode = async function (text, charset) {
+      if (!charset || /utf-8/i.test(charset)) return encodeURIComponent(text);
+      const index = ++resolveEncodingIndex;
+      const promise = new Promise(resolve => {
+        resolveEncoding.set(index, resolve);
+      });
+      const container = document.createElement('div');
+      container.id = `encoding_container_${index}`;
+      const form = document.createElement('form');
+      form.acceptCharset = charset;
+      form.action = `https://${DOMAIN}/encoding`;
+      container.appendChild(form);
+      const indexInput = document.createElement('input');
+      indexInput.value = index;
+      indexInput.name = 'index';
+      form.appendChild(indexInput);
+      const textInput = document.createElement('input');
+      textInput.value = text;
+      textInput.name = 'text';
+      form.appendChild(textInput);
+      const iframe = document.createElement('iframe');
+      iframe.name = form.target = `encoding_frame_${index}`;
+      container.appendChild(iframe);
+      document.body.appendChild(container);
+      form.submit();
+      return promise;
+    };
+    browser.webRequest.onBeforeRequest.addListener(async details => {
+      if (!details.documentUrl.startsWith(browser.extension.getURL('/'))) return {};
+      const url = details.url;
+      const params = url.split(/[?&]/g).slice(1).map(s => s.split('='));
+      const encoded = params.find(([key, value]) => key === 'text')[1];
+      const index = +params.find(([key, value]) => key === 'index')[1];
+      resolveEncoding.get(index)(encoded);
+      resolveEncoding.delete(index);
+      const container = document.getElementById(`encoding_container_${index}`);
+      container.parentNode.removeChild(container);
+      return { cancel: true };
+    }, {
+      urls: [`https://${DOMAIN}/encoding?*`],
+      types: ['sub_frame'],
+    }, ['blocking']);
+    return encode;
+  }());
+
+  const getUrl = async function (type, searchTerms) {
     const defaultSp = config.getDefault();
-    const placeSearchTerms = url => (
-      url.replace(/\{searchTerms\}/g, () => encodeURIComponent(searchTerms))
-    );
+    const placeSearchTerms = async (url, charset) => {
+      const encoded = await encodingText(searchTerms, charset);
+      return url.replace(/\{searchTerms\}/g, () => encoded);
+    };
     if (type === 'search') {
-      const url = placeSearchTerms(defaultSp.search_url);
+      const url = await placeSearchTerms(defaultSp.search_url, defaultSp.encoding);
       if (!defaultSp.search_url_post_params) {
         return url;
       } else {
         const postPage = new URL(browser.extension.getURL('/post/post.html'));
-        const postParams = placeSearchTerms(defaultSp.search_url_post_params);
+        const postParams = defaultSp.search_url_post_params
+          .replace(/\{searchTerms\}/g, () => encodeURIComponent(searchTerms));
         postPage.searchParams.set('url', url);
         postPage.searchParams.set('post', postParams);
+        postPage.searchParams.set('encoding', defaultSp.encoding || 'utf-8');
         return postPage.href;
       }
     } else if (type === 'suggest') {
-      return placeSearchTerms(defaultSp.suggest_url);
+      return await placeSearchTerms(defaultSp.suggest_url, defaultSp.encoding);
     } else if (type === '') {
       return defaultSp.search_form || new URL('/', defaultSp.search_url).href;
     } else {
@@ -217,17 +276,17 @@
   };
 
   // Redirect search request to fake search provider to the one user selected
-  browser.webRequest.onBeforeRequest.addListener(details => {
+  browser.webRequest.onBeforeRequest.addListener(async details => {
     try {
       const url = new URL(details.url);
       const type = url.pathname.slice(1);
       const searchTerms = url.searchParams.get('searchTerms') || '';
-      const redirectUrl = getUrl(type, searchTerms);
+      const redirectUrl = await getUrl(type, searchTerms);
       return { redirectUrl };
     } catch (_ignore) { /* fallthrough */ }
     return { cancel: true };
   }, {
-    urls: ['https://6905b838-e843-4ee3-9df0-b4c79673b21c.invalid/*'],
+    urls: [`https://${DOMAIN}/*`],
     types: ['main_frame'],
   }, ['blocking']);
 
