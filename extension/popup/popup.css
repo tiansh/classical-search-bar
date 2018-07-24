@@ -1,25 +1,47 @@
+:root {
+  --popup: white;
+  --popup-text: MenuText;
+}
+
 body {
   overflow-x: hidden;
   overflow-y: auto;
-}
-
-.panel {
-  transform: scale(1);
   min-width: 240px;
   white-space: nowrap;
+  margin: 0;
+  padding: 0;
+  -moz-user-select: none;
+  font-family: message-box;
+  font-size: 12px;
+  background-color: var(--popup);
+  color: var(--popup-text);
 }
 
-.panel-list-item.current {
-  background-color: rgba(0, 0, 0, 0.06);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+.menu {
+  padding: 6px 0;
 }
 
-.panel-list-item.current:active {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.panel .text {
+.menuitem {
+  display: block;
+  padding: 0 12px 0 36px;
+  box-sizing: border-box;
+  height: 25px;
+  width: 100vw;
+  line-height: 25px;
   overflow: hidden;
   text-overflow: ellipsis;
+  position: relative;
+}
+
+.menuitem.current {
+  background-color: #acacac2d;
+}
+
+.menuitem .icon {
+  position: absolute;
+  top: 4.5px;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
 }

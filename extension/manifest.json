@@ -14,7 +14,9 @@
     "webRequest",
     "webRequestBlocking",
     "https://6905b838-e843-4ee3-9df0-b4c79673b21c.invalid/*",
-    "storage"
+    "storage",
+    "theme",
+    "management"
   ],
 
   "background": {
@@ -25,7 +27,7 @@
   },
 
   "browser_action": {
-    "browser_style": true,
+    "browser_style": false,
     "default_icon": "search.svg",
     "default_title": "__MSG_extensionButtonTitle__",
     "default_popup": "/popup/popup.html"
