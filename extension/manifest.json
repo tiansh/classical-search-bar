@@ -29,7 +29,7 @@
   "browser_action": {
     "browser_style": false,
     "default_icon": "search.svg",
-    "default_title": "__MSG_extensionButtonTitle__",
+    "default_title": "__MSG_extensionName__;",
     "default_popup": "/popup/popup.html"
   },
 
@@ -74,6 +74,5 @@
       "strict_min_version": "60.0"
     }
   }
-
 
 }

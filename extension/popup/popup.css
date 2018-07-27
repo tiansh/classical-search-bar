@@ -37,6 +37,10 @@ body {
   background-color: #acacac2d;
 }
 
+.menuitem.active {
+  font-weight: bold;
+}
+
 .menuitem .icon {
   position: absolute;
   top: 4.5px;

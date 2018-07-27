@@ -290,11 +290,15 @@
     types: ['main_frame'],
   }, ['blocking']);
 
-  const updateIcon = function () {
-    browser.browserAction.setIcon({ path: config.getDefault().favicon_url });
+  const updateButton = function () {
+    const defaultSp = config.getDefault();
+    browser.browserAction.setIcon({ path: defaultSp.favicon_url });
+    const title = browser.i18n.getMessage('extensionButtonTitle')
+      .replace(/%s/ig, () => defaultSp.name);
+    browser.browserAction.setTitle({ title });
   };
-  config.onSetDefault(updateIcon);
-  updateIcon();
+  config.onSetDefault(updateButton);
+  updateButton();
 
   const choseSearchProvider = function (type) {
     const list = config.getList(), default_sp = config.getDefault();

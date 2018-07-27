@@ -8,8 +8,8 @@
     "description": "Description of the extension."
   },
   "extensionButtonTitle": {
-    "message": "Search by ...",
-    "description": "Title of the extension button."
+    "message": "Search with %s",
+    "description": "Title of the extension button. %s would be replaced to current selected search provider's name"
   },
   "addButton": {
     "message": "Add",

@@ -29,10 +29,10 @@
     const menuItem = content.querySelector('.menuitem');
     menuItem.dataset.id = id;
     if (id === defaultSearchProvider.id) {
-      menuItem.classList.add('current');
+      menuItem.classList.add('current', 'active');
       menuItem.setAttribute('aria-current', 'true');
     } else {
-      menuItem.classList.remove('current');
+      menuItem.classList.remove('current', 'active');
       menuItem.removeAttribute('aria-current');
     }
     return document.importNode(menuItem, true);
@@ -55,6 +55,7 @@
       if (item === current) {
         item.classList.add('current');
         item.setAttribute('aria-current', 'true');
+        if (document.activeElement !== item) item.focus();
       } else {
         item.classList.remove('current');
         item.removeAttribute('aria-current');
@@ -100,6 +101,10 @@
   });
   document.addEventListener('contextmenu', event => {
     event.preventDefault();
+  });
+  document.addEventListener('focusin', event => {
+    const item = eventMenuItem(event);
+    setCurrentMenuItem(item);
   });
   scrollCurrentIntoView();
 

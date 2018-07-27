@@ -6,7 +6,7 @@
     "message": "Simula la barra de búsqueda clásica agregando un botón para cambiar el motor de búsqueda."
   },
   "extensionButtonTitle": {
-    "message": "Buscar por..."
+    "message": "Buscar con %s"
   },
   "addButton": {
     "message": "Añadir"

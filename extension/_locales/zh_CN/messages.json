@@ -6,7 +6,7 @@
     "message": "添加一个搜索引擎快速切换按钮以模拟经典搜索框的行为。"
   },
   "extensionButtonTitle": {
-    "message": "搜索…"
+    "message": "使用 %s 搜索"
   },
   "addButton": {
     "message": "添加"
