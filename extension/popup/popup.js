@@ -116,11 +116,18 @@
     'default-theme@mozilla.org',
     'firefox-compact-light@mozilla.org@personas.mozilla.org',
     'firefox-compact-dark@mozilla.org@personas.mozilla.org',
+    'firefox-compact-light@mozilla.org',
+    'firefox-compact-dark@mozilla.org',
   ].includes(extension.id) && extension.enabled);
   const rootStyle = document.documentElement.style;
-  if (currentTheme && currentTheme.id === 'firefox-compact-dark@mozilla.org@personas.mozilla.org') {
-    rootStyle.setProperty('--popup', '#4a4a4f');
-    rootStyle.setProperty('--popup-text', '#f9f9fa');
+  if (currentTheme) {
+    if ([
+      'firefox-compact-dark@mozilla.org@personas.mozilla.org',
+      'firefox-compact-dark@mozilla.org',
+    ].includes(currentTheme.id)) {
+      rootStyle.setProperty('--popup', '#4a4a4f');
+      rootStyle.setProperty('--popup-text', '#f9f9fa');
+    }
   }
   ['popup', 'popup_text'].forEach(key => {
     const color = (theme.colors || {})[key];
