@@ -43,9 +43,14 @@ body {
 
 .menuitem .icon {
   position: absolute;
-  top: 4.5px;
+  top: 4px;
   left: 12px;
   width: 16px;
   height: 16px;
   vertical-align: middle;
+}
+
+.menuitem .icon img {
+  max-width: 16px;
+  max-height: 16px;
 }

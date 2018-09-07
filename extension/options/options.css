@@ -1,62 +1,18 @@
 body {
   font: 15px message-box;
-  line-height: 20px;
+  line-height: 30px;
   text-shadow: 0 1px 1px #fefffe;
+  cursor: default;
+  -moz-user-select: none;
+  user-select: none;
 }
 
-#config_panel {
-  display: flex;
-  min-width: 600px;
-  margin: 1px;
+input[type="checkbox"],
+input[type="radio"] {
+  vertical-align: middle;
 }
 
-#spinfo, #spdetail {
-  border: 1px solid #80808033;
-  position: relative;
-  min-width: 0;
-}
-
-#spinfo {
-  flex: 0 0 240px;
-  padding: 10px 10px 30px;
-}
-
-#spdetail {
-  flex: 1 0 calc(100% - 240px);
-  padding: 0 10px 30px;
-  margin-left: -1px;
-}
-
-.button-line {
-  position: absolute;
-  bottom: 0;
-  left: 10px;
-  right: 10px;
-}
-
-#splist {
-  padding: 10px 0;
-  width: 240px;
-  margin: 0 -10px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  outline: none;
-}
-#splist .current {
-  background-color: #48c3;
-}
-#splist:focus .current {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-#splist .panel-list-item {
-  white-space: nowrap;
-  width: 240px;
-  overflow: hidden;
-}
-
-#faviconinput, #importinput {
+input[type="file"] {
   clip: rect(1px, 1px, 1px, 1px);
   overflow: hidden;
   width: 1px;
@@ -66,42 +22,141 @@ body {
   margin: 0 -1px -1px 0;
 }
 
-.favicon-preview {
-  position: relative;
-  top: 4px;
+
+#config_panel {
+  display: flex;
+  min-width: 600px;
+  width: 100%;
 }
 
-#spdetail > .panel-section {
+#spinfo, #spdetail {
+  border: 1px solid var(--in-content-box-border-color);
+  position: relative;
+}
+
+#spinfo {
+  flex: 0 0 240px;
+  min-width: 240px;
+  box-sizing: border-box;
+}
+
+#spdetail {
+  min-width: 0;
+  flex: 1 0 calc(100% - 240px);
+  margin-left: -1px;
+  box-sizing: border-box;
+  padding: 0 10px 10px;
+}
+
+#spinfo .button-line {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+}
+
+#splist {
+  position: absolute;
+  top: 16px;
+  bottom: 66px;
+  left: 0px;
+  right: 0px;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  outline: none;
+}
+
+#splist .spitem {
   display: block;
-  margin: 20px 0;
+  height: 30px;
+  line-height: 28px;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  border-width: 1px 0;
+  white-space: nowrap; 
+  width: 240px;
+  overflow: hidden;
+  position: relative;
+  padding-left: 60px;
+  direction: ltr;
+}
+
+#splist .spitem input[type="checkbox"],
+#splist .spitem .icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#splist .spitem input[type="checkbox"] {
+  left: 8px;
+}
+
+#splist .spitem input[type="checkbox"] {
+  border: none;
+  background: none;
+  box-shadow: none;
+}
+#splist .spitem input[type="checkbox"]:checked {
+  background-image: url("chrome://global/skin/in-content/check.svg");
+}
+
+#splist .spitem .icon {
+  left: 34px;
+}
+
+#splist .spitem .icon img {
+  width: 16px;
+  height: 16px;
+  vertical-align: -2px;
+}
+
+#splist .spitem:hover {
+  background: #0095dd40;
+}
+
+#splist .spitem.current,
+#splist .spitem.current:focus {
+  background-color: #0a84ff;
+  border-color: #0a84ff;
+  color: white;
+  text-shadow: none;
+}
+
+#splist .spitem.current input[type="checkbox"],
+#splist .spitem.current:focus input[type="checkbox"] {
+  fill: white;
+}
+
+#splist:focus .current {
+  outline: #777 dotted 1px;
+}
+
+#spdetail .button-line {
+  margin-top: 16px;
+}
+
+#spdetail .config-item {
+  display: flow-root;
 }
 
 .config-title {
   display: block;
-  margin: 5px 0;
+  margin: 16px 0 0;
+  font-weight: 600;
 }
 
 .config-content {
-  margin-left: 20px;
+  width: 100%;
+  padding-left: 20px;
+  box-sizing: border-box;
 }
 
-input[type="text"] {
+.config-content input[type="text"] {
   width: calc(100% - 20px);
-}
-
-.browser-style > input[type="checkbox"] {
-  display: inline;
-  -moz-appearance: none;
-  outline: none;
-  margin: 0;
-  padding: 0;
-  border: 0 none;
-}
-
-.browser-style > input[type="checkbox"]:focus + label::before {
-  box-shadow: 0 0 0 2px rgba(97, 181, 255, 0.75);
-  transition-duration: 250ms;
-  transition-property: box-shadow;
+  box-sizing: border-box;
 }
 
 .config-description {
@@ -109,10 +164,10 @@ input[type="text"] {
   font-size: 80%;
 }
 
-#splist .browser-style > input[type="checkbox"] + label::before {
-  position: relative;
-  top: 3px;
-  vertical-align: -5px;
+#spdetail .icon img {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
 }
 
 .create-form #removebutton,
@@ -121,11 +176,8 @@ input[type="text"] {
   display: none;
 }
 
-.button-line::before,
-.button-line::after {
-  content: " ";
-  display: table;
-  clear: both;
+.button-line {
+  display: flow-root;
 }
 
 .button-line button {
@@ -133,7 +185,7 @@ input[type="text"] {
   margin-left: 10px;
 }
 
-#moveupbutton, #movedownbutton, #removebutton {
+.button-line button.button-left {
   float: left;
   margin-left: 0;
   margin-right: 10px;
@@ -153,6 +205,39 @@ input[type="text"] {
   margin: 5px 0;
 }
 
-.backup-content {
-  margin-left: 20px;
+.theme-config-option {
+  margin-right: 40px;
 }
+
+input[type="radio"] {
+  -moz-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--in-content-box-border-color);
+  border-radius: 50%;
+  margin: 0;
+  margin-inline-end: 10px;
+  background-color: #f1f1f1;
+  background-image: linear-gradient(#fff, rgba(255,255,255,0.8));
+  box-shadow: 0 1px 1px 0 #fff, inset 0 2px 0 0 rgba(0,0,0,0.03);
+}
+
+input[type="radio"]:not(:disabled):hover {
+  border-color: var(--in-content-border-focus);
+}
+
+input[type="radio"]:checked {
+  background-image: url("chrome://global/skin/in-content/radio.svg"), linear-gradient(#fff, rgba(255,255,255,0.8));
+  -moz-context-properties: fill;
+  fill: #2292d0;
+}
+
+input[type="radio"]:disabled {
+  opacity: 0.5;
+}
+
+input[type="radio"]:-moz-focusring + html|label:before {
+  outline: 1px dotted;
+}
+

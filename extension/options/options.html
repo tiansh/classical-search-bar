@@ -3,89 +3,98 @@
 
 <head>
   <meta charset="utf-8">
+  <link rel="stylesheet" href="chrome://global/skin/in-content/common.css" />
   <link rel="stylesheet" href="options.css" />
-  <link rel="stylesheet" href="../common.css" />
 </head>
 
 <body>
   <div id="config_panel">
     <div id="spinfo">
-      <div id="splist" class="panel-section panel-section-list" tabindex="2">
-        <template id="spitem">
-          <div class="panel-list-item" role="menuitem">
-            <span class="browser-style"><input type="checkbox" tabindex="-1" /><label></label></span>
-            <div class="icon"><img/></div><div class="text"></div><div class="text-shortcut"></div>
+      <div id="splist" tabindex="2">
+        <template id="sptemplate">
+          <div class="spitem" role="menuitem">
+            <span class="check"><input readonly type="checkbox" tabindex="-1" /></span>
+            <span class="icon"><img/></span>
+            <span class="text"></span>
           </div>
         </template>
       </div>
       <div class="button-line">
-        <button id="addbutton" class="browser-style" type="button" tabindex="1"><span data-i18n="addButton"></span></button>
-        <button id="removebutton" class="browser-style" type="button" tabindex="3"><span data-i18n="removeButton"></span></button>
+        <button id="addbutton" type="button" tabindex="1"><span data-i18n="addButton"></span></button>
+        <button id="removebutton" class="button-left" type="button" tabindex="3"><span data-i18n="removeButton"></span></button>
       </div>      
     </div>
     <div id="spdetail">
-      <div class="panel-section">
+      <div class="config-item">
         <span class="config-title"><span data-i18n="configTitleName"></span></span>
-        <span class="config-content browser-style">
+        <span class="config-content">
           <input id="nameinput" type="text" name="name" data-from-input data-form-attr="name" data-form-target="value" tabindex="3" />
         </span>
       </div>
-      <div class="panel-section">
+      <div class="config-item">
         <span class="config-title"><span data-i18n="configTitleHomePage"></span></span>
-        <span class="config-content browser-style">
+        <span class="config-content">
           <input type="text" name="homepage" data-from-input data-form-attr="search_form" data-form-target="value" tabindex="3" />
         </span>
       </div>
-      <div class="panel-section">
+      <div class="config-item">
         <span class="config-title"><span data-i18n="configTitleSearchUrl"></span></span>
-        <span class="config-content browser-style">
+        <span class="config-content">
           <input type="text" name="search_url" data-from-input data-form-attr="search_url" data-form-target="value" tabindex="3" />
           <span class="config-description"><span data-i18n="configSearchUrlDescription"></span></span>
         </span>
       </div>
-      <div id="postparams" class="panel-section" style="display: none;">
+      <div id="postparams" class="config-item" style="display: none;">
         <span class="config-title"><span data-i18n="configTitleSearchUrlPostParameters"></span></span>
-        <span class="config-content browser-style">
+        <span class="config-content">
           <input type="text" name="search_url_post_params" data-from-input data-form-attr="search_url_post_params" data-form-target="value" tabindex="3" />
         </span>
       </div>
-      <div id="encoding" class="panel-section" style="display: none;">
+      <div id="encoding" class="config-item" style="display: none;">
         <span class="config-title"><span data-i18n="configTitleEncoding"></span></span>
-        <span class="config-content browser-style">
+        <span class="config-content">
           <input type="text" name="encoding" data-from-input data-form-attr="encoding" data-form-target="value" tabindex="3" />
         </span>
       </div>
-      <div class="panel-section">
+      <div class="config-item">
         <span class="config-title"><span data-i18n="configTitleIcon"></span></span>
-        <span class="config-content browser-style">
+        <span class="config-content">
           <span class="favicon-preview icon"><img id="faviconimg" data-form-attr="favicon_url" data-form-target="src" /></span>
           <input id="faviconinput" type="file" name="favicon" tabindex="-1" />
-          <button id="faviconinputbutton" type="button" class="browser-style" tabindex="3"><span data-i18n="browseButton"></span></button>
+          <button id="faviconinputbutton" type="button" tabindex="3"><span data-i18n="browseButton"></span></button>
         </span>
       </div>
-      <div class="panel-section">
+      <div class="config-item">
         <span class="config-title"><span data-i18n="configTitleStatus"></span></span>
-        <span class="config-content browser-style">
+        <span class="config-content">
           <input id="active" type="checkbox" name="active" data-from-input data-form-attr="active" data-form-target="checked" tabindex="3" />
           <label for="active"><span data-i18n="configStatusEnabled"></span></label>
         </span>
       </div>
       <div class="button-line">
-        <button id="moveupbutton" class="browser-style" type="button" tabindex="2"><span data-i18n="moveUpButton"></span></button>
-        <button id="movedownbutton" class="browser-style" type="button" tabindex="2"><span data-i18n="moveDownButton"></span></button>
-        <button id="savebutton" class="browser-style" type="button" tabindex="3"><span data-i18n="saveButton"></span></button>
+        <button id="moveupbutton" class="button-left" type="button" tabindex="2"><span data-i18n="moveUpButton"></span></button>
+        <button id="movedownbutton" class="button-left" type="button" tabindex="2"><span data-i18n="moveDownButton"></span></button>
+        <button id="savebutton" type="button" tabindex="3"><span data-i18n="saveButton"></span></button>
       </div>
     </div>
   </div>
   <div id="backup_panel">
-    <span class="backup-title"><span data-i18n="backupPanelTitle"></span></span>
-    <span class="backup-content">
+    <span class="backup-title config-title"><span data-i18n="backupPanelTitle"></span></span>
+    <span class="backup-content config-content">
       <input id="importinput" type="file" name="favicon" tabindex="-1" />
-      <button id="importoverwritebutton" class="browser-style" type="button" tabindex="4"><span data-i18n="importOverwriteButton"></span></button>
-      <button id="importappendbutton" class="browser-style" type="button" tabindex="4"><span data-i18n="importAppendButton"></span></button>
-      <button id="exportbutton" class="browser-style" type="button" tabindex="4"><span data-i18n="exportButton"></span></button>
-      <button id="resetbutton" class="browser-style" type="button" tabindex="4"><span data-i18n="resetButton"></span></button>
-      <button id="realresetbutton" class="browser-style" type="button" tabindex="4"><span data-i18n="resetButtonSecondTime"></span></button>
+      <button id="importoverwritebutton" type="button" tabindex="4"><span data-i18n="importOverwriteButton"></span></button>
+      <button id="importappendbutton" type="button" tabindex="4"><span data-i18n="importAppendButton"></span></button>
+      <button id="exportbutton" type="button" tabindex="4"><span data-i18n="exportButton"></span></button>
+      <button id="resetbutton" type="button" tabindex="4"><span data-i18n="resetButton"></span></button>
+      <button id="realresetbutton" type="button" tabindex="4"><span data-i18n="resetButtonSecondTime"></span></button>
+    </span>
+  </div>
+  <div id="theme_panel">
+    <span class="theme-title config-title"><span data-i18n="themePanelTitle"></span></span>
+    <span class="theme-content config-content">
+      <label class="theme-config-option"><input type="radio" name="theme" value="Auto" /><span data-i18n="themeAutoText"></span></label>
+      <label class="theme-config-option"><input type="radio" name="theme" value="Dark" /><span data-i18n="themeDarkText"></span></label>
+      <label class="theme-config-option"><input type="radio" name="theme" value="Light" /><span data-i18n="themeLightText"></span></label>
     </span>
   </div>
   <script src="options.js"></script>

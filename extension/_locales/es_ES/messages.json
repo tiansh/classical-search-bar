@@ -73,5 +73,17 @@
   },
   "exportButton": {
     "message": "Exportar"
+  },
+  "themePanelTitle": {
+    "message": "Tema"
+  },
+  "themeAutoText": {
+    "message": "Auto"
+  },
+  "themeDarkText": {
+    "message": "Oscuro"
+  },
+  "themeLightText": {
+    "message": "Claro"
   }
 }

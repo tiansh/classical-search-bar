@@ -98,5 +98,21 @@
   "exportButton": {
     "message": "Export",
     "description": "Button for export settings to a file"
+  },
+  "themePanelTitle": {
+    "message": "Theme",
+    "description": "Title for theme section"
+  },
+  "themeAutoText": {
+    "message": "Auto",
+    "description": "The extension should try to detect browser theme automatically."
+  },
+  "themeDarkText": {
+    "message": "Dark",
+    "description": "The extension should use dark theme."
+  },
+  "themeLightText": {
+    "message": "Light",
+    "description": "The extension should use light theme."
   }
 }

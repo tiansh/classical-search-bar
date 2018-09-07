@@ -11,8 +11,9 @@
       const { method, params = [] } = request;
       const handler = exported.get(method);
       return new Promise(async (resolve, reject) => {
-        try { resolve(await handler(...params)); }
-        catch (ex) { reject(ex); }
+        try {
+          resolve(await handler(...params));
+        } catch (ex) { reject(ex); }
       });
     });
 

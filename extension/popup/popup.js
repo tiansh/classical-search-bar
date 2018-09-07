@@ -108,33 +108,44 @@
   });
   scrollCurrentIntoView();
 
-  const [theme, extensions] = await Promise.all([
-    browser.theme.getCurrent(),
-    browser.management.getAll(),
-  ]);
-  const currentTheme = extensions.find(extension => [
-    'default-theme@mozilla.org',
-    'firefox-compact-light@mozilla.org@personas.mozilla.org',
-    'firefox-compact-dark@mozilla.org@personas.mozilla.org',
-    'firefox-compact-light@mozilla.org',
-    'firefox-compact-dark@mozilla.org',
-  ].includes(extension.id) && extension.enabled);
-  const rootStyle = document.documentElement.style;
-  if (currentTheme) {
-    if ([
-      'firefox-compact-dark@mozilla.org@personas.mozilla.org',
-      'firefox-compact-dark@mozilla.org',
-    ].includes(currentTheme.id)) {
+  ; (async function () {
+    const themeStorage = (await browser.storage.sync.get('theme')).theme;
+    const themeType = { Auto: 'Auto', Dark: 'Dark', Light: 'Light' }[themeStorage && themeStorage.type] || 'Auto';
+    const rootStyle = document.documentElement.style;
+
+    if (themeType === 'Auto') {
+      const [theme, extensions] = await Promise.all([
+        browser.theme.getCurrent(),
+        browser.management.getAll(),
+      ]);
+      const currentTheme = extensions.find(extension => [
+        'default-theme@mozilla.org',
+        'firefox-compact-light@mozilla.org@personas.mozilla.org',
+        'firefox-compact-dark@mozilla.org@personas.mozilla.org',
+        'firefox-compact-light@mozilla.org',
+        'firefox-compact-dark@mozilla.org',
+      ].includes(extension.id) && extension.enabled);
+      if (currentTheme) {
+        if ([
+          'firefox-compact-dark@mozilla.org@personas.mozilla.org',
+          'firefox-compact-dark@mozilla.org',
+        ].includes(currentTheme.id)) {
+          rootStyle.setProperty('--popup', '#4a4a4f');
+          rootStyle.setProperty('--popup-text', '#f9f9fa');
+        }
+      }
+      ['popup', 'popup_text'].forEach(key => {
+        const color = (theme.colors || {})[key];
+        if (!color) return;
+        const value = Array.isArray(color) ? `rgb(${color})` : color;
+        const cssKey = key.replace(/_/g, '-');
+        rootStyle.setProperty(`--${cssKey}`, value);
+      });
+    } if (themeType === 'Dark') {
       rootStyle.setProperty('--popup', '#4a4a4f');
       rootStyle.setProperty('--popup-text', '#f9f9fa');
     }
-  }
-  ['popup', 'popup_text'].forEach(key => {
-    const color = (theme.colors || {})[key];
-    if (!color) return;
-    const value = Array.isArray(color) ? `rgb(${color})` : color;
-    const cssKey = key.replace(/_/g, '-');
-    rootStyle.setProperty(`--${cssKey}`, value);
-  });
+
+  }());
 
 }());

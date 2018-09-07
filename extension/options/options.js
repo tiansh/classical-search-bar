@@ -23,7 +23,7 @@
 
   const renderItem = (function () {
     /** @type {HTMLTemplateElement} */
-    const template = document.getElementById('spitem').cloneNode(true);
+    const template = document.getElementById('sptemplate').cloneNode(true);
     return function ({ id, name, favicon_url, active }) {
       const content = template.content;
       const menuText = content.querySelector('.text');
@@ -32,7 +32,7 @@
       menuIcon.src = favicon_url;
       const checkbox = content.querySelector('input[type="checkbox"]');
       checkbox.checked = active;
-      const menuItem = content.querySelector('.panel-list-item');
+      const menuItem = content.querySelector('.spitem');
       menuItem.dataset.id = id;
       return menuItem;
     };
@@ -71,7 +71,7 @@
       element[attribute] = value;
     };
     const highlightItem = function (id) {
-      [...document.querySelectorAll('.panel-list-item')].forEach(menuitem => {
+      [...document.querySelectorAll('.spitem')].forEach(menuitem => {
         menuitem.classList.remove('current');
         if (+menuitem.dataset.id === id) menuitem.classList.add('current');
       });
@@ -149,9 +149,15 @@
   await initialList();
 
   document.getElementById('splist').addEventListener('click', event => {
-    const item = event.target.closest('.panel-list-item'); if (!item) return;
+    const item = event.target.closest('.spitem');
+    if (!item) return;
     const id = +item.dataset.id;
     focusItem(id);
+    event.preventDefault();
+  });
+
+  document.getElementById('splist').addEventListener('input', event => {
+    event.preventDefault();
   });
 
   document.getElementById('splist').addEventListener('keyup', event => {
@@ -172,6 +178,14 @@
   document.getElementById('addbutton').addEventListener('click', () => {
     addItem();
     document.getElementById('nameinput').focus();
+  });
+
+  document.getElementById('splist').addEventListener('click', event => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    if (!target.matches('.spitem input[type="checkbox"]')) return;
+    const item = target.closest('.spitem');
+    const id = +item.dataset.id;
   });
 
   document.getElementById('savebutton').addEventListener('click', async () => {
@@ -327,6 +341,7 @@
           failedImport();
         }
         await renderList();
+        focusItem(currentList[0].id);
       });
       reader.addEventListener('error', () => {
         failedImport();
@@ -335,5 +350,27 @@
       importFileButton.value = null;
     });
   }());
+
+  document.getElementById('theme_panel').addEventListener('input', async () => {
+    const checked = document.querySelector('#theme_panel input[type="radio"]:checked');
+    const value = { Auto: 'Auto', Dark: 'Dark', Light: 'Light' }[checked.value] || 'Auto';
+    browser.storage.sync.set({ theme: { type: checked.value } });
+  });
+
+  const updateSelectedTheme = async () => {
+    const storage = (await browser.storage.sync.get('theme')).theme;
+    const value = { Auto: 'Auto', Dark: 'Dark', Light: 'Light' }[storage && storage.type] || 'Auto';
+    const inputs = Array.from(document.querySelectorAll('#theme_panel input[type="radio"]'));
+    inputs.forEach(input => {
+      input.checked = input.value === value;
+    });
+  };
+  updateSelectedTheme();
+
+  browser.storage.onChanged.addListener((changes, area) => {
+    if (area !== 'sync') return;
+    if (!changes.theme) return;
+    updateSelectedTheme();
+  });
 
 }());

@@ -73,5 +73,17 @@
   },
   "exportButton": {
     "message": "导出"
+  },
+  "themePanelTitle": {
+    "message": "主题"
+  },
+  "themeAutoText": {
+    "message": "自动"
+  },
+  "themeDarkText": {
+    "message": "暗色"
+  },
+  "themeLightText": {
+    "message": "亮色"
   }
 }
