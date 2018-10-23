@@ -374,3 +374,14 @@
   });
 
 }());
+
+// Firefox 64 uglified its user interface, and we would follow it
+; (async function () {
+
+  const browserInfo = await browser.runtime.getBrowserInfo();
+  const mainVersion = parseInt(browserInfo.version, 10);
+  if (mainVersion >= 64) {
+    document.body.style.background = 'var(--in-content-box-background)';
+  }
+
+}());
