@@ -96,11 +96,12 @@ input[type="file"] {
 
 #splist .spitem input[type="checkbox"] {
   border: none;
-  background: none;
+  background-image: url("chrome://global/skin/in-content/check.svg"), url("chrome://global/skin/icons/check.svg");
+  background-color: transparent;
   box-shadow: none;
 }
-#splist .spitem input[type="checkbox"]:checked {
-  background-image: url("chrome://global/skin/in-content/check.svg");
+#splist .spitem input[type="checkbox"]:not(:checked) {
+  background-image: none;
 }
 
 #splist .spitem .icon {
