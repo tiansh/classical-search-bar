@@ -3,7 +3,7 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "1.6.10",
+  "version": "1.6.12",
   "default_locale": "en",
 
   "icons": {
@@ -37,18 +37,21 @@
     "search-provider-prev": {
       "suggested_key": {
         "default": "Ctrl+Shift+Up"
-      }
+    },
+      "description": "__MSG_searchProviderPrevCommand__"
     },
     "search-provider-next": {
       "suggested_key": {
         "default": "Ctrl+Shift+Down"
-      }
+    },
+      "description": "__MSG_searchProviderNextCommand__"
     },
     "_execute_browser_action": {
       "suggested_key": {
         "default": "Ctrl+Comma"
+      },
+      "description": "__MSG_executeBrowserActionCommand__"
       }
-    }
   },
 
   "chrome_settings_overrides": {

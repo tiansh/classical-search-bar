@@ -85,5 +85,14 @@
   },
   "themeLightText": {
     "message": "亮色"
+  },
+  "executeBrowserActionCommand": {
+    "message": "显示弹出窗口"
+  },
+  "searchProviderPrevCommand": {
+    "message": "更改默认搜索引擎↑"
+  },
+  "searchProviderNextCommand": {
+    "message": "更改默认搜索引擎↓"
   }
 }

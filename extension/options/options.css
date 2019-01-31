@@ -150,6 +150,7 @@ input[type="file"] {
 }
 
 .config-content {
+  display: block;
   width: 100%;
   padding-left: 20px;
   box-sizing: border-box;
@@ -161,6 +162,7 @@ input[type="file"] {
 }
 
 .config-description {
+  display: block;
   margin-left: 20px;
   font-size: 80%;
 }

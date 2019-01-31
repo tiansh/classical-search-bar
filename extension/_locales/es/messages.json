@@ -6,7 +6,7 @@
     "message": "Simula la barra de búsqueda clásica agregando un botón para cambiar el motor de búsqueda."
   },
   "extensionButtonTitle": {
-    "message": "Buscar con %s"
+    "message": "Buscar usando %S"
   },
   "addButton": {
     "message": "Añadir"
@@ -85,5 +85,14 @@
   },
   "themeLightText": {
     "message": "Claro"
+  },
+  "executeBrowserActionCommand": {
+    "message": "Mostrar la Ventana Emergente"
+  },
+  "searchProviderPrevCommand": {
+    "message": "Cambiar el buscador predeterminado ↑"
+  },
+  "searchProviderNextCommand": {
+    "message": "Cambiar el buscador predeterminado ↓"
   }
 }

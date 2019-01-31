@@ -8,7 +8,7 @@
     "description": "Description of the extension."
   },
   "extensionButtonTitle": {
-    "message": "Search with %s",
+    "message": "Search using %s",
     "description": "Title of the extension button. %s would be replaced to current selected search provider's name"
   },
   "addButton": {
@@ -114,5 +114,17 @@
   "themeLightText": {
     "message": "Light",
     "description": "The extension should use light theme."
+  },
+  "executeBrowserActionCommand": {
+    "message": "Show the Popup",
+    "description": "Title for config keyboard shotcut of execute browser action"
+  },
+  "searchProviderPrevCommand": {
+    "message": "Change the Default Search Engine ↑",
+    "description": "Title for config keyboard shotcut of changing to prev search provider"
+  },
+  "searchProviderNextCommand": {
+    "message": "Change the Default Search Engine ↓",
+    "description": "Title for config keyboard shotcut of changing to next search provider"
   }
 }

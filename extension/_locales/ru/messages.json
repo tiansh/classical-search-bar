@@ -1,0 +1,98 @@
+{
+  "extensionName": {
+    "message": "Classical Search Bar"
+  },
+  "extensionDescription": {
+    "message": "Симулирует классическую панель поиска, добавляя кнопку для переключения поисковых систем."
+  },
+  "extensionButtonTitle": {
+    "message": "Искать через %s"
+  },
+  "addButton": {
+    "message": "Добавить"
+  },
+  "resetButton": {
+    "message": "Восстановить по умолчанию"
+  },
+  "resetButtonSecondTime": {
+    "message": "Нажмите ещё раз для подтверждения"
+  },
+  "configTitleName": {
+    "message": "Название"
+  },
+  "configTitleHomePage": {
+    "message": "Домен"
+  },
+  "configTitleSearchUrl": {
+    "message": "Поисковый URL"
+  },
+  "configTitleSearchUrlPostParameters": {
+    "message": "Дополнительные параметры"
+  },
+  "configTitleEncoding": {
+    "message": "Кодировка"
+  },
+  "configSearchUrlDescription": {
+    "message": "Используйте {searchTerms} для подстановки текста в поисковый запрос"
+  },
+  "configTitleIcon": {
+    "message": "Иконка"
+  },
+  "browseButton": {
+    "message": "Обзор..."
+  },
+  "configTitleStatus": {
+    "message": "Видимость"
+  },
+  "configStatusEnabled": {
+    "message": "Отображать"
+  },
+  "moveUpButton": {
+    "message": "Поднять"
+  },
+  "moveDownButton": {
+    "message": "Опустить"
+  },
+  "saveButton": {
+    "message": "Сохранить"
+  },
+  "removeButton": {
+    "message": "Удалить"
+  },
+  "backupPanelTitle": {
+    "message": "Настройки"
+  },
+  "importOverwriteButton": {
+    "message": "Импорт с замещением настроек"
+  },
+  "importAppendButton": {
+    "message": "Импорт с добавлением настроек"
+  },
+  "importFailedAlert": {
+    "message": "При импорте настроек, что-то пошло не так."
+  },
+  "exportButton": {
+    "message": "Экспорт настроек"
+  },
+  "themePanelTitle": {
+    "message": "Оформление"
+  },
+  "themeAutoText": {
+    "message": "Авто"
+  },
+  "themeDarkText": {
+    "message": "Тёмное"
+  },
+  "themeLightText": {
+    "message": "Светлое"
+  },
+  "executeBrowserActionCommand": {
+    "message": "показать всплывающие окна"
+  },
+  "searchProviderPrevCommand": {
+    "message": "Переключить поисковую систему ↑"
+  },
+  "searchProviderNextCommand": {
+    "message": "Переключить поисковую систему ↓"
+  }
+}
