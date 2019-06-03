@@ -1,7 +1,6 @@
 body {
   font: 15px message-box;
   line-height: 30px;
-  text-shadow: 0 1px 1px #fefffe;
   cursor: default;
   -moz-user-select: none;
   user-select: none;
