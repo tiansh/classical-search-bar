@@ -11,8 +11,7 @@ body {
   margin: 0;
   padding: 0;
   -moz-user-select: none;
-  font-family: message-box;
-  font-size: 12px;
+  font: menu;
   background-color: var(--popup);
   color: var(--popup-text);
 }

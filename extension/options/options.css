@@ -1,9 +1,11 @@
 body {
-  font: 15px message-box;
+  font: message-box;
+  font-size: 15px;
   line-height: 30px;
   cursor: default;
   -moz-user-select: none;
   user-select: none;
+  padding-bottom: 20px;
 }
 
 input[type="checkbox"],
@@ -220,9 +222,6 @@ input[type="radio"] {
   border-radius: 50%;
   margin: 0;
   margin-inline-end: 10px;
-  background-color: #f1f1f1;
-  background-image: linear-gradient(#fff, rgba(255,255,255,0.8));
-  box-shadow: 0 1px 1px 0 #fff, inset 0 2px 0 0 rgba(0,0,0,0.03);
 }
 
 input[type="radio"]:not(:disabled):hover {
@@ -230,7 +229,7 @@ input[type="radio"]:not(:disabled):hover {
 }
 
 input[type="radio"]:checked {
-  background-image: url("chrome://global/skin/in-content/radio.svg"), linear-gradient(#fff, rgba(255,255,255,0.8));
+  background-image: url("chrome://global/skin/in-content/radio.svg");
   -moz-context-properties: fill;
   fill: #2292d0;
 }
