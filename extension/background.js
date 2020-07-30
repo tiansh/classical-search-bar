@@ -7,14 +7,14 @@
     /** @type {Map<string, Function>} */
     const exported = new Map();
 
-    browser.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
+    browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
       const { method, params = [] } = request;
       const handler = exported.get(method);
-      return new Promise(async (resolve, reject) => {
-        try {
-          resolve(await handler(...params));
-        } catch (ex) { reject(ex); }
-      });
+      try {
+        return Promise.resolve(handler(...params));
+      } catch (exception) {
+        return Promise.reject(exception);
+      }
     });
 
     return f => {
@@ -39,6 +39,20 @@
   const config = await (async function () {
     const key = 'searchProviderList';
 
+    const readStorage = async function () {
+      const data = (await browser.storage.local.get(key))[key];
+      if (data == null) {
+        const sync = (await browser.storage.sync.get(key))[key];
+        if (sync != null) {
+          await writeStorage(sync);
+          return sync;
+        }
+      }
+      return data;
+    };
+    const writeStorage = async function (setting) {
+      await browser.storage.local.set({ [key]: setting });
+    };
     const normalizeConfig = function (list) {
       list.forEach(sp => { if (!sp.active) sp.is_default = false; });
       const default_sp = list.find(sp => sp.is_default) ||
@@ -50,7 +64,7 @@
     };
     const readConfig = async function () {
       try {
-        const setting = (await browser.storage.sync.get(key))[key];
+        const setting = await readStorage();
         if (!Array.isArray(setting)) throw Error();
         const list = setting.map(copySearchProvider);
         const default_sp = normalizeConfig(list);
@@ -64,7 +78,7 @@
         if (!Array.isArray(list)) throw Error();
         const setting = list.map(copySearchProvider);
         normalizeConfig(setting);
-        await browser.storage.sync.set({ [key]: setting });
+        await writeStorage(setting);
         return readConfig();
       } catch (_ignore) {
         return resetConfig();
