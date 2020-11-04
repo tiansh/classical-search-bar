@@ -17,6 +17,18 @@
   "resetButtonSecondTime": {
     "message": "确认重置"
   },
+  "configTitleType": {
+    "message": "类型"
+  },
+  "configTypeProvider": {
+    "message": "搜索引擎"
+  },
+  "configTypeFolder": {
+    "message": "文件夹"
+  },
+  "configTypeSeparator": {
+    "message": "分隔线"
+  },
   "configTitleName": {
     "message": "名称"
   },
@@ -60,7 +72,7 @@
     "message": "删除"
   },
   "backupPanelTitle": {
-    "message":  "设置"
+    "message": "设置"
   },
   "importOverwriteButton": {
     "message": "导入并覆盖"
@@ -88,6 +100,9 @@
   },
   "executeBrowserActionCommand": {
     "message": "显示弹出窗口"
+  },
+  "popupBackButton": {
+    "message": "返回"
   },
   "searchProviderPrevCommand": {
     "message": "更改默认搜索引擎↑"

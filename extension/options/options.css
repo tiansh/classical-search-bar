@@ -77,10 +77,11 @@ input[type="file"] {
   border: 1px solid transparent;
   border-width: 1px 0;
   white-space: nowrap; 
-  width: 240px;
+  width: 100%;
   overflow: hidden;
   position: relative;
   padding-left: 60px;
+  padding-right: 20px;
   direction: ltr;
 }
 
@@ -115,6 +116,12 @@ input[type="file"] {
   vertical-align: -2px;
 }
 
+#splist .spitem .text {
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 #splist .spitem:hover {
   background: #0095dd40;
 }
@@ -132,6 +139,52 @@ input[type="file"] {
   fill: white;
 }
 
+#splist .spfolderitem,
+#splist .spseparatoritem {
+  overflow: hidden;
+}
+
+#splist .spfolderitem::before {
+  content: " ";
+  position: absolute;
+  top: 2px;
+  left: 10px;
+  right: 10px;
+  bottom: 2px;
+  border: 1px solid var(--in-content-box-border-color);
+  border-radius: 2px;
+  z-index: 1;
+}
+
+#splist .spseparatoritem::before {
+  content: " ";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: 50%;
+  border: 1px solid var(--in-content-box-border-color);
+  z-index: 1;
+}
+
+#splist .spseparatoritem.current::before,
+#splist .spfolderitem.current::before {
+  border-color: white;
+}
+
+#splist .spfolderitem .text {
+  position: relative;
+  z-index: 2;
+}
+
+#splist .spfolder-open::before {
+  bottom: -4px;
+}
+
+#splist .spfolder-close::before {
+  top: -4px;
+}
+
 #splist:focus .current {
   outline: #777 dotted 1px;
 }
@@ -143,6 +196,11 @@ input[type="file"] {
 #spdetail .config-item {
   display: flow-root;
 }
+
+#spdetail .config-item[hidden] {
+  visibility: hidden;
+}
+
 
 .config-title {
   display: block;
@@ -157,7 +215,8 @@ input[type="file"] {
   box-sizing: border-box;
 }
 
-.config-content input[type="text"] {
+.config-content input[type="text"],
+.config-content select {
   width: calc(100% - 20px);
   box-sizing: border-box;
 }
@@ -174,10 +233,31 @@ input[type="file"] {
   vertical-align: middle;
 }
 
+#typeinput {
+  display: none;
+}
+
+#typetext {
+  line-height: 2.1;
+  margin: 4px 8px;
+  padding-inline: 5px 24px;
+  padding: 0 8px;
+  min-height: 32px;
+  display: inline-block;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+}
+
+.create-form #typetext {
+  display: none;
+}
+.create-form #typeinput {
+  display: inline-block;
+}
 .create-form #removebutton,
 .create-form #moveupbutton,
 .create-form #movedownbutton {
-  display: none;
+  visibility: hidden;
 }
 
 .button-line {

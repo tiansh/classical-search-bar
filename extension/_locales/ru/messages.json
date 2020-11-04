@@ -17,6 +17,18 @@
   "resetButtonSecondTime": {
     "message": "Нажмите ещё раз для подтверждения"
   },
+  "configTitleType": {
+    "message": "Тип"
+  },
+  "configTypeProvider": {
+    "message": "Поисковая система"
+  },
+  "configTypeFolder": {
+    "message": "Папка"
+  },
+  "configTypeSeparator": {
+    "message": "Разделитель"
+  },
   "configTitleName": {
     "message": "Название"
   },
@@ -88,6 +100,9 @@
   },
   "executeBrowserActionCommand": {
     "message": "показать всплывающие окна"
+  },
+  "popupBackButton": {
+    "message": "Назад"
   },
   "searchProviderPrevCommand": {
     "message": "Переключить поисковую систему ↑"

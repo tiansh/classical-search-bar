@@ -15,6 +15,10 @@
     "message": "Add",
     "description": "A button for adding search engine in option page"
   },
+  "addFolderButton": {
+    "message": "Add Folder",
+    "description": "A button for adding search engine folder in option page"
+  },
   "resetButton": {
     "message": "Restore Default",
     "description": "A button for reset search engine list in option page"
@@ -23,9 +27,25 @@
     "message": "Click Again to Confirm",
     "description": "A button for confirm reset action"
   },
+  "configTypeProvider": {
+    "message": "Search Engine",
+    "description": "Type of option records for search engines"
+  },
+  "configTitleType": {
+    "message": "Type",
+    "description": "Option title for the type of elements"
+  },
+  "configTypeFolder": {
+    "message": "Folder",
+    "description": "Type of option records for folders"
+  },
+  "configTypeSeparator": {
+    "message": "Seprator",
+    "description": "Type of option records for seprators"
+  },
   "configTitleName": {
     "message": "Name",
-    "description": "Option title for the name of a search engine"
+    "description": "Option title for the name of a search engine or a folder"
   },
   "configTitleHomePage": {
     "message": "Home Page",
@@ -118,6 +138,10 @@
   "executeBrowserActionCommand": {
     "message": "Show the Popup",
     "description": "Title for config keyboard shotcut of execute browser action"
+  },
+  "popupBackButton": {
+    "message": "Back",
+    "description": "Title for back button on popup menu"
   },
   "searchProviderPrevCommand": {
     "message": "Change the Default Search Engine ↑",

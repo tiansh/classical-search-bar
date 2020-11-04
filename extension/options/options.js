@@ -21,7 +21,7 @@
 
   const defaultFavicon = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgd2lkdGg9IjEyOHB4IiBoZWlnaHQ9IjEyOHB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBmaWxsPSJjb250ZXh0LWZpbGwiIGZpbGwtb3BhY2l0eT0iY29udGV4dC1maWxsLW9wYWNpdHkiPg0KPHBhdGggZD0ibTYgMWE1IDUgMCAwIDAgMCAxMGE1IDUgMCAwIDAgMCAtMTB2MmEzIDMgMCAwIDEgMCA2YTIgMiAwIDAgMSAwIC02TTkuODI4IDguNDE0bC0xLjQxNCAxLjQxNEwxMi41ODU4IDE0QTEgMSAwIDAgMCAxNCAxMi41ODU4eiIvPg0KPC9zdmc+';
 
-  const renderItem = (function () {
+  const renderSeachProviderItem = (function () {
     /** @type {HTMLTemplateElement} */
     const template = document.getElementById('sptemplate').cloneNode(true);
     return function ({ id, name, favicon_url, active }) {
@@ -37,15 +37,46 @@
       return menuItem;
     };
   }());
+  const renderSeachProviderFolderItem = (function () {
+    /** @type {HTMLTemplateElement} */
+    const template = document.getElementById('foldertemplate').cloneNode(true);
+    return function ({ id, name, type }) {
+      const content = template.content;
+      const menuItem = content.querySelector('.spitem').cloneNode(true);
+      menuItem.dataset.id = id;
+      const menuText = menuItem.querySelector('.text');
+      if (type === 'folder-open') {
+        menuText.textContent = name;
+        menuItem.classList.add('spfolder-open');
+      } else {
+        menuText.remove();
+        menuItem.classList.add('spfolder-close');
+      }
+      return menuItem;
+    };
+  }());
+  const renderSeachProviderSeparatorItem = (function () {
+    /** @type {HTMLTemplateElement} */
+    const template = document.getElementById('separatortemplate').cloneNode(true);
+    return function ({ id }) {
+      const content = template.content;
+      const menuItem = template.content.querySelector('.spitem').cloneNode(true);
+      menuItem.dataset.id = id;
+      return menuItem;
+    };
+  }());
 
   let currentList = null;
   let currentItem = (function () {
     const rawObject = {};
-    [...document.querySelectorAll('[data-from-input]')].forEach(input => {
+    [...document.querySelectorAll('[data-form-input]')].forEach(input => {
       const attribute = input.getAttribute('data-form-target');
       const prop = input.getAttribute('data-form-attr');
       input.addEventListener('input', () => {
         rawObject[prop] = input[attribute];
+        if (prop === 'type') {
+          setDetailType(input[attribute]);
+        }
       });
     });
     const faviconinput = document.getElementById('faviconinput');
@@ -89,6 +120,22 @@
       if (value) encoding.style.display = '';
       else encoding.style.display = 'none';
     };
+    const setDetailType = function (type) {
+      const spdetail = document.getElementById('spdetail');
+      const items = Array.from(spdetail.querySelectorAll('[data-form-type]'));
+      items.forEach(item => {
+        const active = item.getAttribute('data-form-type').split(/\s+/).includes(type);
+        item.hidden = !active;
+      });
+      const typeInput = document.getElementById('typeinput');
+      typeInput.value = type;
+      const typeText = document.getElementById('typetext');
+      typeText.textContent = browser.i18n.getMessage({
+        provider: 'configTypeProvider',
+        'folder-open': 'configTypeFolder',
+        separator: 'configTypeSeparator',
+      }[type]);
+    };
     return new Proxy(rawObject, {
       get: (obj, prop) => obj[prop],
       set: (obj, prop, value) => {
@@ -109,6 +156,10 @@
           if (prop === 'search_url_post_params') showHidePostParams(value);
           if (prop === 'encoding') showHideEncoding(value);
         }
+        if (prop === 'type') {
+          obj[prop] = value;
+          setDetailType(value);
+        }
         return true;
       },
     });
@@ -119,8 +170,14 @@
     const menu = document.getElementById('splist');
     const menuItems = document.createDocumentFragment();
     searchProviderList.forEach(item => {
-      menuItems.appendChild(document.importNode(renderItem(item), true));
-    });
+      if (item.type === 'folder-open' || item.type === 'folder-close') {
+        menuItems.appendChild(document.importNode(renderSeachProviderFolderItem(item), true));
+      } else if (item.type === 'separator') {
+        menuItems.appendChild(document.importNode(renderSeachProviderSeparatorItem(item), true));
+      } else {
+        menuItems.appendChild(document.importNode(renderSeachProviderItem(item), true));
+      }
+    }, 0);
     menu.innerHTML = '';
     menu.appendChild(menuItems);
   };
@@ -132,6 +189,7 @@
   const addItem = function () {
     Object.assign(currentItem, {
       id: 0,
+      type: 'provider',
       name: '',
       search_url: '',
       favicon_url: defaultFavicon,
@@ -190,9 +248,9 @@
 
   document.getElementById('savebutton').addEventListener('click', async () => {
     try {
-      const savedItem = await callBackend.saveItem(Object.assign({}, currentItem));
+      const savedItemId = await callBackend.saveItem(Object.assign({}, currentItem));
       await renderList();
-      focusItem(savedItem.id);
+      focusItem(savedItemId);
     } catch (_ignore) {
       const spdetail = document.getElementById('spdetail');
       spdetail.classList.add('form-invalid');
@@ -205,7 +263,7 @@
   document.getElementById('removebutton').addEventListener('click', async () => {
     const id = currentItem.id; if (!id) return;
     const index = currentList.findIndex(sp => sp.id === id); if (index === -1) return;
-    callBackend.removeItem({ id });
+    await callBackend.removeItem(id);
     await renderList();
     focusItem(currentList[Math.min(index, currentList.length - 1)].id);
   });
@@ -243,7 +301,7 @@
       const index = currentList.findIndex(sp => sp.id === id);
       const new_index = index + diff;
       if (new_index < 0 || new_index >= currentList.length) return;
-      callBackend.moveItem({ id }, new_index);
+      callBackend.moveItem(id, new_index);
       await renderList();
       focusItem(id);
     };
@@ -255,18 +313,24 @@
   const getExportData = async function () {
     const searchProviderList = await callBackend.getListAll();
     const search_providers = searchProviderList.map(sp => ({
-      name: sp.name,
-      search_url: sp.search_url,
-      favicon_url: sp.favicon_url,
-      suggest_url: sp.suggest_url,
-      search_form: sp.search_form,
-      search_url_post_params: sp.search_url_post_params || '',
-      encoding: sp.encoding || '',
-      active: sp.active,
-    }));
+      provider: () => ({
+        name: sp.name,
+        type: sp.type,
+        search_url: sp.search_url,
+        favicon_url: sp.favicon_url,
+        suggest_url: sp.suggest_url,
+        search_form: sp.search_form,
+        search_url_post_params: sp.search_url_post_params || '',
+        encoding: sp.encoding || '',
+        active: sp.active,
+      }),
+      'folder-open': () => ({ name: sp.name, type: sp.type }),
+      'folder-close': () => ({ type: sp.type }),
+      separator: () => ({ type: sp.type }),
+    }[sp.type]()));
     return {
-      version: 1,
-      min_version: 1,
+      version: 2,
+      min_version: 2,
       extension: {
         name: browser.i18n.getMessage('extensionName'),
         version: browser.runtime.getManifest().version,
@@ -292,20 +356,29 @@
 
   ; (function () {
     const parseSearchProviderImport = data => {
-      if (!+data.min_version || data.min_version > 1) throw TypeError();
+      if (!+data.min_version || data.min_version > 2) throw TypeError();
       const searchList = data.search_providers;
       if (!Array.isArray(searchList)) throw TypeError();
       if (!searchList.length) throw TypeError();
-      const importList = searchList.map(sp => ({
-        name: (sp.name || '') + '',
-        search_url: (sp.search_url || '') + '',
-        favicon_url: (sp.favicon_url || defaultFavicon) + '',
-        suggest_url: (sp.suggest_url || '') + '',
-        search_form: (sp.search_form || '') + '',
-        search_url_post_params: ((sp.search_url_post_params || '') + '') || null,
-        encoding: ((sp.encoding || '') + '') || null,
-        active: !!sp.active,
-      }));
+      const importList = searchList.map(sp => {
+        if (sp.type === 'folder-open') {
+          return { name: (sp.name || '') + '', type: sp.type };
+        }
+        if (sp.type === 'folder-close' || sp.type === 'separator') {
+          return { type: sp.type };
+        }
+        return {
+          name: (sp.name || '') + '',
+          type: 'provider',
+          search_url: (sp.search_url || '') + '',
+          favicon_url: (sp.favicon_url || defaultFavicon) + '',
+          suggest_url: (sp.suggest_url || '') + '',
+          search_form: (sp.search_form || '') + '',
+          search_url_post_params: ((sp.search_url_post_params || '') + '') || null,
+          encoding: ((sp.encoding || '') + '') || null,
+          active: !!sp.active,
+        };
+      });
       return importList;
     };
 

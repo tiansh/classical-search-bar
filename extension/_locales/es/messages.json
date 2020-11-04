@@ -17,6 +17,18 @@
   "resetButtonSecondTime": {
     "message": "Haga clic de nuevo para confirmar"
   },
+  "configTitleType": {
+    "message": "Tipo"
+  },
+  "configTypeProvider": {
+    "message": "Buscador"
+  },
+  "configTypeFolder": {
+    "message": "Carpeta"
+  },
+  "configTypeSeparator": {
+    "message": "Separador"
+  },
   "configTitleName": {
     "message": "Nombre"
   },
@@ -88,6 +100,9 @@
   },
   "executeBrowserActionCommand": {
     "message": "Mostrar la Ventana Emergente"
+  },
+  "popupBackButton": {
+    "message": "Atrás"
   },
   "searchProviderPrevCommand": {
     "message": "Cambiar el buscador predeterminado ↑"

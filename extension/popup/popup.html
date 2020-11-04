@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 
 <head>
@@ -7,9 +7,23 @@
 </head>
 
 <body>
-  <div id="menu" class="menu" role="menu"></div>
-  <template id="menuitem">
-    <div class="menuitem" role="menuitem" tabindex="1"><div class="icon"><img/></div><div class="text"></div></div>
+  <div id="page" class="page">
+    <header id="pagetitle" class="page-title"><div id="backbutton" class="menuitem backbutton" role="button" aria-label="Back" tabindex="1"></div><div class="title-text"></div></header>
+    <div id="menu" class="menu" role="menu"></div>
+  </div>
+  <template id="arrow">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" fill-opacity="context-fill-opacity">
+      <path d="M9.793 2.293l-5 5a1 1 0 0 0 0 1.414l5 5a1 1 0 0 0 1.414 -1.414l-4.293 -4.293l4.293 -4.293a1 1 0 0 0 -1.414 -1.414" />
+    </svg>
+  </template>
+  <template id="spitem">
+    <div class="menuitem" role="menuitem" tabindex="1"><div class="icon"><img /></div><div class="text"></div></div>
+  </template>
+  <template id="spfolderitem">
+    <div class="menuitem folderitem" role="menuitem" tabindex="1" aria-haspopup="true"><div class="text"></div><div class="folder-more" aria-hidden="true"></div></div>
+  </template>
+  <template id="spseparatoritem">
+    <div class="separatoritem" role="separator"></div>
   </template>
   <script src="popup.js"></script>
 </body>
