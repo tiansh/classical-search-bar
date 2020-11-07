@@ -511,7 +511,7 @@
     if (!list) return;
     const searchText = browser.i18n.getMessage('contextMenuSearch');
     const rootTitle = searchText.replace(/&/g, '&&').replace(/r/i, '&$&').replace(/^([^r]*)$/i, '$1 (&R)');
-    const stack = [browser.menus.create({ id: '0', title: rootTitle, contexts: ['link', 'selection'], })];
+    const stack = [browser.menus.create({ id: '0', title: rootTitle, contexts: ['link', 'selection'] })];
     list.forEach(item => {
       if (item.type === 'folder-close') {
         stack.pop();
