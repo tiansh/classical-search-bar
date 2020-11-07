@@ -98,6 +98,18 @@
   "themeLightText": {
     "message": "亮色"
   },
+  "menuPanelTitle": {
+    "message": "上下文菜单"
+  },
+  "contextMenuOptionText": {
+    "message": "将“搜索”添加到上下文菜单"
+  },
+  "contextMenuBackgroundText": {
+    "message": "在背景选项卡中打开搜索结果"
+  },
+  "contextMenuSearch": {
+    "message": "搜索"
+  },
   "executeBrowserActionCommand": {
     "message": "显示弹出窗口"
   },

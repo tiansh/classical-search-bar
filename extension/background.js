@@ -190,12 +190,13 @@
     };
 
     /** @type {(() => any)[]} */
-    const setDefaultCallback = [];
+    const defaultChangeCallback = [], listChangeCallback = [];
     let { list, default_sp } = await readConfig();
 
     const saveList = async function (newList) {
       ({ list, default_sp } = await writeConfig(newList));
-      setDefaultCallback.forEach(f => f());
+      defaultChangeCallback.forEach(f => f());
+      listChangeCallback.forEach(f => f());
     };
     const resetList = async function () {
       saveList(null);
@@ -244,8 +245,11 @@
       default_sp.is_default = true;
       await saveList(list);
     };
-    const onSetDefault = function (callback) {
-      setDefaultCallback.push(callback);
+    const onDefaultChange = function (callback) {
+      defaultChangeCallback.push(callback);
+    };
+    const onListChange = function (callback) {
+      listChangeCallback.push(callback);
     };
     const nextId = function () {
       let id = 1;
@@ -335,7 +339,8 @@
       getListAll,
       getDefault,
       setDefault,
-      onSetDefault,
+      onDefaultChange,
+      onListChange,
       addItem,
       setItem,
       moveItem,
@@ -429,29 +434,29 @@
     return encode;
   }());
 
-  const getUrl = async function (type, searchTerms) {
-    const defaultSp = config.getDefault();
+  const getUrl = async function (type, searchTerms, sp) {
+    sp = sp || config.getDefault();
     const placeSearchTerms = async (url, charset) => {
       const encoded = await encodingText(searchTerms, charset);
       return url.replace(/\{searchTerms\}/g, () => encoded);
     };
     if (type === 'search') {
-      const url = await placeSearchTerms(defaultSp.search_url, defaultSp.encoding);
-      if (!defaultSp.search_url_post_params) {
+      const url = await placeSearchTerms(sp.search_url, sp.encoding);
+      if (!sp.search_url_post_params) {
         return url;
       } else {
         const postPage = new URL(browser.extension.getURL('/post/post.html'));
-        const postParams = defaultSp.search_url_post_params
+        const postParams = sp.search_url_post_params
           .replace(/\{searchTerms\}/g, () => encodeURIComponent(searchTerms));
         postPage.searchParams.set('url', url);
         postPage.searchParams.set('post', postParams);
-        postPage.searchParams.set('encoding', defaultSp.encoding || 'utf-8');
+        postPage.searchParams.set('encoding', sp.encoding || 'utf-8');
         return postPage.href;
       }
     } else if (type === 'suggest') {
-      return await placeSearchTerms(defaultSp.suggest_url, defaultSp.encoding);
+      return await placeSearchTerms(sp.suggest_url, sp.encoding);
     } else if (type === '') {
-      return defaultSp.search_form || new URL('/', defaultSp.search_url).href;
+      return sp.search_form || new URL('/', sp.search_url).href;
     } else {
       return null;
     }
@@ -479,7 +484,7 @@
       .replace(/%s/ig, () => defaultSp.name);
     browser.browserAction.setTitle({ title });
   };
-  config.onSetDefault(updateButton);
+  config.onDefaultChange(updateButton);
   updateButton();
 
   const choseSearchProvider = function (type) {
@@ -494,5 +499,68 @@
     if (command === 'search-provider-next') choseSearchProvider('next');
     if (command === 'search-provider-prev') choseSearchProvider('prev');
   });
+
+  let contextMenuMemo = null;
+  const updateContextMenu = async function () {
+    const storage = (await browser.storage.sync.get('menu')).menu;
+    const active = storage && storage.active;
+    const list = active ? config.getList() : null;
+    if (JSON.stringify(list) === JSON.stringify(contextMenuMemo)) return;
+    contextMenuMemo = list;
+    browser.menus.removeAll();
+    if (!list) return;
+    const searchText = browser.i18n.getMessage('contextMenuSearch');
+    const rootTitle = searchText.replace(/&/g, '&&').replace(/r/i, '&$&').replace(/^([^r]*)$/i, '$1 (&R)');
+    const stack = [browser.menus.create({ id: '0', title: rootTitle, contexts: ['link', 'selection'], })];
+    list.forEach(item => {
+      if (item.type === 'folder-close') {
+        stack.pop();
+      } else {
+        const desc = {
+          id: String(item.id),
+          parentId: stack[stack.length - 1],
+        };
+        if (item.type === 'folder-open' || item.type === 'provider') {
+          desc.title = item.name.replace(/&/g, '&&');
+        }
+        if (item.type === 'provider') {
+          desc.icons = { '16': item.favicon_url };
+        }
+        if (item.type === 'separator') {
+          desc.type = 'separator';
+        }
+        const menuitem = browser.menus.create(desc);
+        if (item.type === 'folder-open') {
+          stack.push(menuitem);
+        }
+      }
+    });
+  };
+
+  browser.storage.onChanged.addListener((changes, area) => {
+    if (area !== 'sync' || !changes.menu) return;
+    updateContextMenu();
+  });
+  config.onListChange(updateContextMenu);
+  updateContextMenu();
+
+  browser.menus.onClicked.addListener(async (info, tab) => {
+    const menuItemId = info.menuItemId;
+    const id = Number(menuItemId);
+    const list = config.getList();
+    const searchProvider = list.find(item => item.id === id);
+    const searchTerms = (info.selectionText || info.linkText).trim();
+    const alternateActive = info.modifiers.includes('Ctrl') ||
+      info.modifiers.includes('Command') || info.button === 2;
+    const { background } = (await browser.storage.sync.get('menu')).menu || {};
+    const active = alternateActive === Boolean(background);
+    await browser.tabs.create({
+      active,
+      index: tab.index + 1,
+      url: await getUrl('search', searchTerms, searchProvider),
+      windowId: tab.windowId,
+    });
+  });
+
 
 }());

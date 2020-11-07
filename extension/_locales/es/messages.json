@@ -98,6 +98,18 @@
   "themeLightText": {
     "message": "Claro"
   },
+  "menuPanelTitle": {
+    "message": "Menú Contextual"
+  },
+  "contextMenuOptionText": {
+    "message": "Agregar ‘Buscar’ al menú contextual"
+  },
+  "contextMenuBackgroundText": {
+    "message": "Abrir resultado de la búsqueda en una pestaña en segundo plano"
+  },
+  "contextMenuSearch": {
+    "message": "Buscar"
+  },
   "executeBrowserActionCommand": {
     "message": "Mostrar la Ventana Emergente"
   },

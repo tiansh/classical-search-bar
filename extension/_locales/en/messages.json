@@ -135,6 +135,22 @@
     "message": "Light",
     "description": "The extension should use light theme."
   },
+  "menuPanelTitle": {
+    "message": "Context Menu",
+    "description": "Title for context menu section"
+  },
+  "contextMenuOptionText": {
+    "message": "Add \"Search\" to context Menu",
+    "description": "Option text for adding search to context menu"
+  },
+  "contextMenuBackgroundText": {
+    "message": "Open search result in a background tab",
+    "description": "Option text for open search of context menu in background"
+  },
+  "contextMenuSearch": {
+    "message": "Search",
+    "description": "Top level context menu text"
+  },
   "executeBrowserActionCommand": {
     "message": "Show the Popup",
     "description": "Title for config keyboard shotcut of execute browser action"

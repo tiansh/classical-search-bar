@@ -172,7 +172,7 @@
 
   const backMenuItem = (mouse = false) => {
     if (currentMenu.base.type === 'folder') {
-      navigateFolder(currentMenu.base.parent, mouse || currentMenu.base);
+      navigateFolder(currentMenu.base.parent, mouse || currentMenu.base, true);
     }
   };
 
@@ -184,7 +184,7 @@
   }());
 
   let mouseMoveOnPosition = null;
-  const navigateFolder = function (base, mouseOrTarget) {
+  const navigateFolder = function (base, mouseOrTarget, slide) {
     renderPage(base);
 
     let focus = null;
@@ -199,8 +199,15 @@
       focus = Math.max(0, base.children.findIndex(item => item.active));
     }
     focusMenuitem(focus);
+
+    const page = document.getElementById('page');
+    if (slide === true) page.classList.add('slide-right');
+    if (slide === false) page.classList.add('slide-left');
+    requestAnimationFrame(() => {
+      page.classList.remove('slide-left', 'slide-right');
+    });
   };
-  navigateFolder(searchProviderRoot);
+  navigateFolder(searchProviderRoot, null, null);
 
   /** @param {MouseEvent} event */
   const eventMenuItem = event => {
@@ -217,7 +224,7 @@
     }
     const data = currentMenu.data.get(item);
     if (data.type === 'folder') {
-      navigateFolder(data, mouse);
+      navigateFolder(data, mouse, false);
     } else {
       callBackend.setDefault(data.id).then(() => {
         window.close();
@@ -228,7 +235,7 @@
   const expandMenuItem = item => {
     const data = currentMenu.data.get(item);
     if (data && data.type === 'folder') {
-      navigateFolder(data);
+      navigateFolder(data, null, false);
     }
   };
 
@@ -248,38 +255,72 @@
     if (item) focusMenuitem(item);
   });
 
+  const handleArrowKey = isUp => {
+    const index = currentMenu.index;
+    const next = index + (isUp ? -1 : 1);
+    const min = currentMenu.base.type === 'root' ? 0 : -1;
+    const max = currentMenu.items.length - 1;
+    const newIndex = next < min ? max : next > max ? min : next;
+    focusMenuitem(newIndex);
+  };
+  const handleHomeEndKey = isHome => {
+    const newIndex = isHome ? 0 : currentMenu.items.length - 1;
+    focusMenuitem(newIndex);
+  };
+  const handleNumberKey = num => {
+    const index = Number(num) - 1;
+    if (index < currentMenu.items.length) {
+      focusMenuitem(index);
+      choseMenuItem(currentMenu.items[index]);
+    }
+  };
+  const handleEnterKey = () => {
+    if (currentMenu.index !== -1) {
+      choseMenuItem(currentMenu.items[currentMenu.index]);
+    } else {
+      backMenuItem();
+    }
+  };
+  const handleRightKey = () => {
+    expandMenuItem(currentMenu.items[currentMenu.index]);
+  };
+  const handleLeftKey = () => {
+    backMenuItem();
+  };
+  const handleLetterKey = key => {
+    const letter = key.toUpperCase();
+    const list = currentMenu.base.children;
+    const matchIndex = list.map((item, index) => {
+      return item.name[0].toUpperCase() === letter ? index : -1;
+    }).filter(val => val >= 0);
+    if (matchIndex.length === 0) return;
+    if (matchIndex.length === 1) {
+      choseMenuItem(currentMenu.items[matchIndex[0]]);
+    }
+    const next = matchIndex.find(i => i > currentMenu.index);
+    if (next == null) {
+      focusMenuitem(matchIndex[0]);
+    } else {
+      focusMenuitem(next);
+    }
+  };
+
   document.addEventListener('keydown', event => {
     const key = event.key;
     if (['ArrowUp', 'ArrowDown'].includes(key)) {
-      const index = currentMenu.index;
-      const next = index + (key === 'ArrowUp' ? -1 : 1);
-      const min = currentMenu.base.type === 'root' ? 0 : -1;
-      const max = currentMenu.items.length - 1;
-      const newIndex = next < min ? max : next > max ? min : next;
-      focusMenuitem(newIndex);
+      handleArrowKey(key === 'ArrowUp');
     } else if (['End', 'Home'].includes(key)) {
-      const newIndex = key === 'End' ? currentMenu.items.length - 1 : 0;
-      focusMenuitem(newIndex);
+      handleHomeEndKey(key === 'Home');
     } else if ('123456789'.includes(key)) {
-      const index = Number(key) - 1;
-      if (index < currentMenu.items.length) {
-        focusMenuitem(index);
-        choseMenuItem(currentMenu.items[index]);
-      }
+      handleNumberKey(Number(key));
     } else if ([' ', 'Enter'].includes(key)) {
-      if (currentMenu.index !== -1) {
-        choseMenuItem(currentMenu.items[currentMenu.index]);
-      } else {
-        backMenuItem();
-      }
+      handleEnterKey();
     } else if (['ArrowRight'].includes(key)) {
-      expandMenuItem(currentMenu.items[currentMenu.index]);
+      handleRightKey();
     } else if (['ArrowLeft'].includes(key)) {
-      backMenuItem();
+      handleLeftKey();
     } else if (key.length === 1 && (('a' <= key && key <= 'z') || ('A' <= key && key <= 'Z'))) {
-      const letter = key.toUpperCase();
-      const newIndex = currentMenu.base.children.findIndex(item => item.name[0].toUpperCase() === letter);
-      if (newIndex !== -1) focusMenuitem(newIndex);
+      handleLetterKey(key);
     } else return;
     event.preventDefault();
   });
@@ -303,7 +344,7 @@
           browser.theme.getCurrent(),
           browser.management.getAll(),
         ]);
-        Object.assign(preferColor, theme);
+        Object.assign(preferColor, theme.colors);
         const currentTheme = extensions.find(extension => [
           'default-theme@mozilla.org',
           'firefox-compact-light@mozilla.org@personas.mozilla.org',

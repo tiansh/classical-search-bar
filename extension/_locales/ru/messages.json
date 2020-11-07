@@ -98,6 +98,18 @@
   "themeLightText": {
     "message": "Светлое"
   },
+  "menuPanelTitle": {
+    "message": "Контекстное Меню"
+  },
+  "contextMenuOptionText": {
+    "message": "Добавить Искать в контекстное меню"
+  },
+  "contextMenuBackgroundText": {
+    "message": "Открыть результат Поиска в фоновой вкладке"
+  },
+  "contextMenuSearch": {
+    "message": "Искать"
+  },
   "executeBrowserActionCommand": {
     "message": "показать всплывающие окна"
   },

@@ -3,7 +3,7 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "default_locale": "en",
 
   "icons": {
@@ -16,7 +16,8 @@
     "https://6905b838-e843-4ee3-9df0-b4c79673b21c.invalid/*",
     "storage",
     "theme",
-    "management"
+    "management",
+    "menus"
   ],
 
   "background": {

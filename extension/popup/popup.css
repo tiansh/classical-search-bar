@@ -12,8 +12,8 @@ html {
 body {
   overflow-x: hidden;
   overflow-y: auto;
-  min-width: 240px;
-  max-width: 440px;
+  min-width: 280px;
+  max-width: 360px;
   white-space: nowrap;
   margin: 0;
   padding: 0;
@@ -21,6 +21,23 @@ body {
   font: menu;
   background-color: var(--popup);
   color: var(--popup-text);
+}
+
+.page {
+  display: block;
+  position: relative;
+  left: 0;
+  transition: left linear 0.1s;
+}
+
+.page.slide-right {
+  left: -100%;
+  transition: none;
+}
+
+.page.slide-left {
+  left: 100%;
+  transition: none;
 }
 
 .menu {

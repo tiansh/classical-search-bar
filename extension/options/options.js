@@ -441,9 +441,31 @@
   updateSelectedTheme();
 
   browser.storage.onChanged.addListener((changes, area) => {
-    if (area !== 'sync') return;
-    if (!changes.theme) return;
+    if (area !== 'sync' || !changes.theme) return;
     updateSelectedTheme();
+  });
+
+  document.getElementById('menu_panel').addEventListener('input', async event => {
+    const input = event.target;
+    const checked = input.checked;
+    const attr = input.name;
+    const old = (await browser.storage.sync.get('menu')).menu;
+    const value = Object.assign({}, old, { [attr]: checked });
+    browser.storage.sync.set({ menu: value });
+  });
+
+  const updateContextMenuOption = async () => {
+    const storage = (await browser.storage.sync.get('menu')).menu;
+    const inputs = Array.from(document.querySelectorAll('#menu_panel input'));
+    inputs.forEach(input => {
+      input.checked = storage[input.name];
+    });
+  };
+  updateContextMenuOption();
+
+  browser.storage.onChanged.addListener((changes, area) => {
+    if (area !== 'sync' || !changes.menu) return;
+    updateContextMenuOption();
   });
 
 }());
