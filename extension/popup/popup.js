@@ -330,6 +330,13 @@
   });
 
   ; (async function () {
+    const browserInfo = await browser.runtime.getBrowserInfo();
+    if (browserInfo.name === 'Firefox' && Number.parseInt(browserInfo.version, 10) >= 89) {
+      document.body.classList.add('fx89');
+    }
+  }());
+
+  ; (async function () {
     const themeStorage = (await browser.storage.sync.get('theme')).theme;
     const themeType = { Auto: 'Auto', Dark: 'Dark', Light: 'Light' }[themeStorage && themeStorage.type] || 'Auto';
     const rootStyle = document.documentElement.style;
